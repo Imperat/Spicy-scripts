@@ -1,0 +1,5 @@
+(defmacro dolist ((a lst) &body)
+	(eval ‘(set 'a ,a))
+	(eval body)
+	(if (eq (cdr lst) T)
+		dolist ((a, (cdr lst), body))))()
