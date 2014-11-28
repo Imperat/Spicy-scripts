@@ -5,3 +5,4 @@ antwort(N, I, J, P, S, R) :-  I=<N, S1 is S + P,  I1 is I + 1, antwort(N, I1, 1,
 antwort(N, I, J, P, S, S) :- I>N.
 								 
 y(N) :- antwort(N, 1, 1, 1, 0, R), write(R).
+f
