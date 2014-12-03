@@ -13,6 +13,9 @@ class CofeeMachine
   def load ()
   component.each_key { |key| component[key] = Size}
   end
-  
+  def hi ()
+  puts "lololololo"
+  end
   end
   
+  puts "hello"
