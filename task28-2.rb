@@ -28,28 +28,32 @@ class CofeeMachine
     else
       return nil
     end
-
-    changes.each_key{ |key|
-      if key != "sugar" and key != "lemon" and not @Recipes.key?(key)
-        changes.delete(key)
+    const = true
+    tmp.each_key do |key|
+      if changes.key?(key)
+        tmp[key] += changes[key]
       end
-      }
-
-    tmp.merge! (changes) do |key, old, news|
-     if tmp.key?(key) != nil or key == "sugar" or key == "lemon"
-       news = old + news
-     end
+    end
+    unless tmp["lemon"]
+      tmp["lemon"] = changes["lemon"]
+    end
+    unless tmp["sugar"]
+      tmp["sugar"] = changes["sugar"]
     end
     tmp.each do |k, v|
-      if @component[k] - v > 0
+      '''if @component[k] - v > 0
         @component[k] -= v
       else
         nil
       end
-    end
-    const = true
-    @component.each_value do |v| 
-      if v < 0 then const = false end
+      '''
+      temp = @component
+      
+      unless temp[k]-v > 0 ? temp[k] -= v : nil
+        const = false
+        break
+      end
+      @component = temp
     end
     if const
       @offers[rec] ? @offers[rec]+=1 : @offers[rec]=1
@@ -78,6 +82,10 @@ end
   cf.order("Coffee", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
   print cf.status, "\n"
   cf.order("Coffee", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
+  print cf.status, "\n"
+  cf.order("Tea", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
+  print cf.status, "\n"
+  cf.order("Tea", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
   print cf.status, "\n"
   cf.order("Tea", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
   print cf.status, "\n"
