@@ -1,6 +1,6 @@
 class CofeeMachine
 
-  def initialize ()
+  def initialize
     @component = {"coffee" => 0, "tea" => 0, "chocolate" => 0, "cream" => 0, "sugar" => 0, "lemon" => 0}
     @offers = {}
     @Size = 23
@@ -20,7 +20,7 @@ class CofeeMachine
       end
     end
     if @Recipes.key?(rec)
-      tmp = @Recipes[rec]
+      tmp = @Recipes[rec].clone
     else
       return nil
     end
@@ -28,13 +28,15 @@ class CofeeMachine
     tmp.each_key do |key|
       if changes.key?(key)
         tmp[key] += changes[key]
+        if tmp[key] < 0 then tmp[key] = 0 end
       end
     end
-    unless tmp["lemon"] or changes["lemon"] <= 0
-      tmp["lemon"] = changes["lemon"]
-    end
-    unless tmp["sugar"] or changes["lemon"] <= 0
-      tmp["sugar"] = changes["sugar"]
+    ["lemon", "sugar"].each do |x|
+      unless tmp.key?(x)
+        if changes[x]
+          if changes[x] > 0 then tmp[x] = changes[x] end
+        end
+      end
     end
     temp = @component.clone
     tmp.each do |k, v|
@@ -44,7 +46,6 @@ class CofeeMachine
         const = false
         nil
       end
-     # if f then @component = temp end
     end
     if const
       @component = temp.clone
@@ -80,5 +81,7 @@ end
   cf.order("Tea", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
   puts cf.status
   cf.order("Tea", {"lemon" => 4, "tea" => 3, "sugar" => 2, "coffee" =>2})
+  cf.order("Cream", {"sugar" => 2})
+  cf.order("Cream", {"sugar" => -1})
   puts cf.status
   print cf.stat
