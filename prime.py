@@ -3,17 +3,17 @@ def Prime (N, matrix, Tree = [0], res = []):
     minim = 100000
     index = -1
     for j in Tree:
-        for i in matrix[j]:
-            if i < minim and matrix[j].index(i) not in Tree:
+        for i in range(len(matrix[j])):
+            if matrix[j][i] < minim and i not in Tree:
                 minim = i
-                index, indexj = matrix[j].index(i), j
+                index, indexj = i, j
     if index != -1:
         res.append((index, indexj))
-        print "в оставное дерево добавлена вершина " + str(index)
         return Prime(N, matrix, Tree + [index], res)
     else:
-        return Tree
+        return res
 
-#tmp = Prime(3, [[0, 5, 1], [5,0,3], [1,3,0]])
-tmp = Prime(4, [[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-print tmp
+tmp = Prime(3, [[0, 5, 1], [5,0,3], [1,3,0]])
+#tmp = Prime(4, [[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
+for i in tmp:
+    print i
