@@ -79,7 +79,7 @@ class Graph:
     def read(self, filename):
         try:
             with open(filename) as f:
-                self.vertex = eval(f.readline())
+                self.vertex = set(eval(f.readline()))
                 self.struct = eval(f.readline())
         except:
             raise Error
@@ -129,7 +129,7 @@ class Graph:
         else:
             tmp = self.ddfs(u)
             if v not in tmp:
-                print "u ", u, "v ", v
+                #print "u ", u, "v ", v
                 return None 
             else:
                 conjug = self.struct[u]
@@ -143,8 +143,38 @@ class Graph:
                 else:
                     return answer[0]
 
+    def MinPathUV(self, u,v, leng = 0):
+        if not v in self.ddfs(u):
+            return 99999
+        else:
+            if u==v:
+                return leng
+            else:
+                f = lambda x: self.MinPathUV(x,v, leng + 1)
+                return min(map(f, self.conjugate(u)))
 
 
+    def Eccentricity(self, u):
+        f = lambda x: self.MinPathUV(u,x)
+        g = lambda x: x != 99999
+        vert = self.vertex - set([u])
+        antw = filter(g, map(f, vert))
+        if antw:
+            return max(antw)
+        else:
+            return 99999
+
+    def Radius(self):
+        f = lambda x: self.Eccentricity(x)
+        return min(map(f, self.vertex))
+
+    def Center(self):
+        antwort = []
+        r = self.Radius()
+        for i in self.vertex:
+            if self.Eccentricity(i) == r:
+                antwort.append(i)        
+        return antwort
 
 
 a = Graph()
@@ -153,4 +183,8 @@ a.read("graph.txt")
 
 #print a.ddfs(24)
 #print a.TopologSort()
-print a.AllTrops(34, 45)
+#print a.AllTrops(34, 45)
+print a.Eccentricity(76)
+print a.MinPathUV(2,76)
+print a.Radius()
+print a.Center()
