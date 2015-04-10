@@ -4,7 +4,8 @@
 class Graph:
     struct = dict()
     vertex = set()
-
+    color  = dict() # метки цветов
+    num = 0
 
     def addVertex(self, a):
         if a in self.vertex:
@@ -83,6 +84,8 @@ class Graph:
                 self.struct = eval(f.readline())
         except:
             raise Error
+        for i in self.vertex:
+            self.color[i]="white"
 
     def conjugate(self, a):
         if a in self.vertex:
@@ -107,6 +110,20 @@ class Graph:
         dfs(self, a)
         return views
 
+
+
+    def dfs(self, v):
+        self.color[v] = "grey"
+        for u in self.struct[v]:
+            if self.color[u] == "white":
+                self.dfs(u)
+            elif self.color[u] == "grey":
+                print "Cycle in this!"
+                exit()
+        self.num += 1
+        self.color[v] = "black"
+        print v
+
     def A(self, a):
         olala = set()
         for i in self.struct.keys():
@@ -114,14 +131,17 @@ class Graph:
                 olala.add(i)
         return olala
 
-    def TopologSort(self):
-        res = []
+    def topolog(self):
+        for v in self.struct.keys():
+            if self.color[v] == "white":
+                self.dfs(v)
+
+
+    def __init__(self):
         for i in self.vertex:
-            tmp = self.ddfs(i)
-            res = res + tmp
-            if len(res) == len(self.vertex):
-                return res
-                break
+            self.color[i]="white"
+        #print self.color
+
 
     def AllTrops(self, u, v, parameter=[], top = True):
         if u == v:
@@ -184,7 +204,8 @@ a.read("graph.txt")
 #print a.ddfs(24)
 #print a.TopologSort()
 #print a.AllTrops(34, 45)
-print a.Eccentricity(76)
-print a.MinPathUV(2,76)
-print a.Radius()
-print a.Center()
+#print a.Eccentricity(76)
+#print a.MinPathUV(2,76)
+#print a.Radius()
+#print a.Center()
+a.topolog()
