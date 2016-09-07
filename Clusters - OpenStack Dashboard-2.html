@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    
+    <title>Clusters - OpenStack Dashboard</title>
+    
+    
+      
+
+
+<link rel="stylesheet" href="Clusters%20-%20OpenStack%20Dashboard-2_files/34f8a8f8d5e5.css" type="text/css" media="screen">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="Clusters%20-%20OpenStack%20Dashboard-2_files/3a606a2eb7e1.css" type="text/css">
+
+
+<link rel="shortcut icon" href="http://172.18.78.25:8080/static/dashboard/img/favicon.ico">
+
+    
+    
+  
+
+  <script type="text/javascript" charset="utf-8">
+    if (self === top) {
+      var antiClickjack = document.getElementById("anti-clickjack");
+      antiClickjack.parentNode.removeChild(antiClickjack);
+    } else {
+      top.location = self.location;
+    }
+  </script>
+
+
+    
+
+
+
+
+
+<script type="text/javascript" src="Clusters%20-%20OpenStack%20Dashboard-2_files/e3c82f97923d.js"></script><style></style>
+
+<script type="text/javascript" charset="utf-8">
+  (function (global) {
+    'use strict';
+
+    // make translation info available on client
+    horizon.languageCode = 'en';
+    horizon.languageBidi = 'False';
+    horizon.datepickerLocale = 'en';
+
+    /* Load angular modules extensions list before we include angular/horizon.js */
+    global.horizonPlugInModules = ['horizon.dashboard.project', 'horizon.dashboard.admin', 'horizon.dashboard.identity', 'horizon.dashboard.developer'];
+
+    /* Storage for backend configuration variables which the frontend
+     * should be aware of.
+     */
+    var conf = horizon.conf;
+    conf.static_url = "/static/";
+    conf.ajax = {
+      queue_limit: 10
+    };
+    conf.auto_fade_alerts = {
+      delay: 3000,
+      fade_duration: 1500,
+      types: ['alert-success', 'alert-info']
+    };
+    conf.disable_password_reveal =
+      false;
+
+  })(this);
+</script>
+
+    <script type="text/javascript" charset="utf-8">
+  /*
+    Added so that we can append Horizon scoped JS events to
+    the DOM load events without running in to the "horizon"
+    name-space not currently being defined since we load the
+    scripts at the bottom of the page.
+  */
+  var addHorizonLoadEvent = function(func) {
+    var old_onload = window.onload;
+
+    if (typeof window.onload != 'function') {
+      window.onload = func;
+    } else {
+      window.onload = function() {
+        old_onload();
+        func();
+      }
+    }
+  }
+</script>
+
+    
+     
+  </head>
+  <body style="padding-right: 14px;" class="ng-scope modal-open" ng-app="horizon.app" ng-strict-di="">
+    <noscript>
+      <div class="alert alert-danger text-center javascript-disabled">
+        This application requires JavaScript to be enabled in your web browser.
+      </div>
+    </noscript>
+    
+      <div class="topbar">
+        
+
+<nav class="navbar navbar-default navbar-fixed-top"><div class="container-fluid"><!-- Brand and toggle get grouped for better mobile display --><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://172.18.78.25:8080/home/" target="_self"><img class="openstack-logo" src="Clusters%20-%20OpenStack%20Dashboard-2_files/logo.png" alt="OpenStack Dashboard"></a></div><!-- Collect the nav links, forms, and other content for toggling --><div class="collapse navbar-collapse" id="navbar-collapse"><ul class="nav navbar-nav"><li class="dropdown"><a class="dropdown-toggle" role="button" aria-expanded="false" data-toggle="dropdown" href="#"><span class="fa fa-list-alt"></span><span class="context-overview"><span class="context-project">dev</span></span><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu context-selection selection-menu"><li><ul class="dropdown-menu"><li class="dropdown-header">Projects:</li><li><a class=" dropdown-selected" href="http://172.18.78.25:8080/auth/switch/cdb11406b8aa4370a85060cbb0346195/?next=/project/data_processing/clusters/" target="_self"><span class="fa fa-check dropdown-selected-icon"></span><span class="dropdown-title">
+        dev
+      </span></a></li></ul></li></ul></li></ul><ul class="nav navbar-nav navbar-right"><li class="dropdown user-menu"><a data-toggle="dropdown" href="#" class="dropdown-toggle" role="button" aria-expanded="false"><span class="fa fa-user"></span><span class="user-name">dev-user</span><span class="fa fa-caret-down"></span></a><ul id="editor_list" class="dropdown-menu dropdown-menu-right selection-menu"><li><a href="http://172.18.78.25:8080/settings/" target="_self"><span class="fa fa-cog"></span>
+          Settings
+        </a></li><li><a href="http://docs.openstack.org/" target="_blank"><span class="fa fa-question-circle"></span>
+            Help
+          </a></li><li class="divider"></li><li><ul class="dropdown-menu theme-picker"><li class="dropdown-header">Themes:</li><li><a data-theme="default" class="theme-default theme-picker-item dropdown-selected disabled" href="#" target="_self"><span class="fa fa-check dropdown-selected-icon"></span><span class="dropdown-title">Default</span></a></li><li><a data-theme="material" class="theme-material theme-picker-item openstack-spin" href="#" target="_self"><span class="fa fa-check dropdown-selected-icon"></span><span class="dropdown-title">Material</span></a></li></ul><script>
+  $(document).ready(function() {
+
+    horizon.addInitFunction(function() {
+
+      $(document).on('click', '.theme-picker-item', function(e) {
+        var $this = $(this);
+
+        // prevent the default <a> click handler from firing - on
+        // Chrome it confuses the reload() we do below
+        e.preventDefault();
+
+        if($this.hasClass('disabled')) {
+          e.stopPropagation();
+          return;
+        }
+
+        var CookieDate = new Date;
+        CookieDate.setFullYear(CookieDate.getFullYear( ) +10);
+
+        document.cookie = 'theme=' + $this.data('theme') + '; path=/; expires=' + CookieDate.toGMTString( ) + ';';
+        document.location.reload();
+      });
+    });
+  });
+</script></li><li class="divider"></li><li><a href="http://172.18.78.25:8080/auth/logout/" target="_self"><span class="fa fa-sign-out"></span>
+          Sign Out
+        </a></li></ul></li><li class="dropdown"></li></ul></div><!-- /.navbar-collapse --></div><!-- /.container-fluid --></nav>
+
+      </div>
+      <div id="main_content">
+        
+<div class="messages">
+<toast class="ng-isolate-scope"><!-- ngRepeat: toast in toast.get() -->
+</toast>
+
+</div>
+        
+          
+
+<div id="sidebar">
+  
+
+<ul id="sidebar-accordion" class="nav nav-pills nav-stacked">
+  
+    
+      <li class="panel openstack-dashboard active">
+        <a data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#sidebar-accordion-project" href="javascript:;">
+          Project
+          <span class="openstack-toggle pull-right fa"></span>
+        </a>
+        <ul id="sidebar-accordion-project" class="nav collapse panel-collapse in">
+          
+            
+              
+                
+                  <li class="nav-header panel">
+                    <a data-toggle="collapse" data-parent="#sidebar-accordion-project" data-target="#sidebar-accordion-project-compute" href="javascript:;" class="collapsed">
+                      <span class="nav-header-title">
+                        Compute
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+                    <ul id="sidebar-accordion-project-compute" class="nav collapse panel-collapse
+                        ">
+                
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/" target="_self" tabindex="1">
+                      Overview
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/instances/" target="_self" tabindex="2">
+                      Instances
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/volumes/" target="_self" tabindex="3">
+                      Volumes
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/images/" target="_self" tabindex="4">
+                      Images
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/access_and_security/" target="_self" tabindex="5">
+                      Access &amp; Security
+                    </a>
+                  </li>
+                
+                
+                    </ul>
+                  </li>
+                
+              
+            
+          
+            
+              
+                
+                  <li class="nav-header panel">
+                    <a data-toggle="collapse" data-parent="#sidebar-accordion-project" data-target="#sidebar-accordion-project-network" href="javascript:;" class="collapsed">
+                      <span class="nav-header-title">
+                        Network
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+                    <ul id="sidebar-accordion-project-network" class="nav collapse panel-collapse
+                        ">
+                
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/network_topology/" target="_self" tabindex="1">
+                      Network Topology
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/networks/" target="_self" tabindex="2">
+                      Networks
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/routers/" target="_self" tabindex="3">
+                      Routers
+                    </a>
+                  </li>
+                
+                
+                    </ul>
+                  </li>
+                
+              
+            
+          
+            
+              
+                
+                  <li class="nav-header panel">
+                    <a data-toggle="collapse" data-parent="#sidebar-accordion-project" data-target="#sidebar-accordion-project-orchestration" href="javascript:;" class="collapsed">
+                      <span class="nav-header-title">
+                        Orchestration
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+                    <ul id="sidebar-accordion-project-orchestration" class="nav collapse panel-collapse
+                        ">
+                
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/stacks/" target="_self" tabindex="1">
+                      Stacks
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/stacks/resource_types/" target="_self" tabindex="2">
+                      Resource Types
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/stacks/template_versions/" target="_self" tabindex="3">
+                      Template Versions
+                    </a>
+                  </li>
+                
+                
+                    </ul>
+                  </li>
+                
+              
+            
+          
+            
+              
+                
+                  <li class="nav-header panel">
+                    <a data-toggle="collapse" data-parent="#sidebar-accordion-project" data-target="#sidebar-accordion-project-data_processing" href="javascript:;">
+                      <span class="nav-header-title">
+                        Data Processing
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+                    <ul id="sidebar-accordion-project-data_processing" class="nav collapse panel-collapse
+                         in
+                        ">
+                
+                
+                  <li class="panel openstack-panel active">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/data_processing/clusters/" target="_self" tabindex="1">
+                      Clusters
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/data_processing/data_plugins/" target="_self" tabindex="2">
+                      Plugins
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/data_processing/jobs/" target="_self" tabindex="3">
+                      Jobs
+                    </a>
+                  </li>
+                
+                
+                    </ul>
+                  </li>
+                
+              
+            
+          
+            
+              
+                
+                  <li class="nav-header panel">
+                    <a data-toggle="collapse" data-parent="#sidebar-accordion-project" data-target="#sidebar-accordion-project-object_store" href="javascript:;" class="collapsed">
+                      <span class="nav-header-title">
+                        Object Store
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+                    <ul id="sidebar-accordion-project-object_store" class="nav collapse panel-collapse
+                        ">
+                
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/project/containers/" target="_self" tabindex="1">
+                      Containers
+                    </a>
+                  </li>
+                
+                
+                    </ul>
+                  </li>
+                
+              
+            
+          
+        </ul>
+      </li>
+    
+  
+    
+      <li class="panel openstack-dashboard">
+        <a data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#sidebar-accordion-identity" href="javascript:;" class="collapsed">
+          Identity
+          <span class="openstack-toggle pull-right fa"></span>
+        </a>
+        <ul id="sidebar-accordion-identity" class="nav collapse panel-collapse">
+          
+            
+              
+                
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/identity/" target="_self" tabindex="1">
+                      Projects
+                    </a>
+                  </li>
+                
+                
+              
+            
+          
+        </ul>
+      </li>
+    
+  
+    
+      <li class="panel openstack-dashboard">
+        <a data-toggle="collapse" data-parent="#sidebar-accordion" data-target="#sidebar-accordion-developer" href="javascript:;" class="collapsed">
+          Developer
+          <span class="openstack-toggle pull-right fa"></span>
+        </a>
+        <ul id="sidebar-accordion-developer" class="nav collapse panel-collapse">
+          
+            
+              
+                
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/developer/" target="_self" tabindex="1">
+                      Bootstrap Theme Preview
+                    </a>
+                  </li>
+                
+                  <li class="panel openstack-panel">
+                    <a class="openstack-spin" href="http://172.18.78.25:8080/developer/resource_browser/" target="_self" tabindex="2">
+                      Resources
+                    </a>
+                  </li>
+                
+                
+              
+            
+          
+        </ul>
+      </li>
+    
+  
+</ul>
+
+</div>
+
+        
+        <div id="content_body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="page-breadcrumb">
+                  
+                    <ol class="breadcrumb"><li class="breadcrumb-item-truncate">Project</li><li class="breadcrumb-item-truncate">Data Processing</li><li class="breadcrumb-item-truncate active">Clusters</li></ol>
+
+                  
+                </div>
+
+                
+                  
+
+  <div class="page-header">
+    <h1>Clusters</h1>
+    
+  </div>
+
+
+                
+                
+<div class="row">
+  <div class="col-sm-12">
+    
+
+
+  
+  
+  <ul id="cluster_tabs" class="nav nav-tabs ajax-tabs" data-sticky-tabs="sticky">
+    
+    <li class="">
+      <a aria-expanded="false" href="http://172.18.78.25:8080/project/data_processing/clusters/?tab=cluster_tabs__clusters_tab" data-toggle="tab" data-target="#cluster_tabs__clusters_tab" data-loaded="true">Clusters</a>
+    </li>
+    
+    <li class="">
+      <a href="http://172.18.78.25:8080/project/data_processing/clusters/?tab=cluster_tabs__clusters_templates_tab" data-toggle="tab" data-target="#cluster_tabs__clusters_templates_tab" data-loaded="true">Cluster Templates</a>
+    </li>
+    
+    <li class="active">
+      <a aria-expanded="true" href="http://172.18.78.25:8080/project/data_processing/clusters/?tab=cluster_tabs__node_group_templates_tab" data-toggle="tab" data-target="#cluster_tabs__node_group_templates_tab" data-loaded="true">Node Group Templates</a>
+    </li>
+    
+    <li class="">
+      <a href="http://172.18.78.25:8080/project/data_processing/clusters/?tab=cluster_tabs__image_registry_tab" data-toggle="tab" data-target="#cluster_tabs__image_registry_tab" data-loaded="true">Image Registry</a>
+    </li>
+    
+  </ul>
+  
+
+  
+  <div class="tab-content">
+    
+    <div id="cluster_tabs__clusters_tab" class="tab-pane">
+      
+
+<div class="table_wrapper">
+  <form class="ng-pristine ng-valid" action="/project/data_processing/clusters/" method="POST"><input name="csrfmiddlewaretoken" value="hmi1wZ8X39b9qWscEKdaaxvAn2QqdfIe" type="hidden">
+  
+
+   <table id="clusters" class="table table-striped datatable ">
+    
+      <caption>
+        
+        
+<div class="table_actions clearfix">
+
+  
+    <div class="table_search">
+      
+        
+
+<div class="themable-select dropdown " xmlns="http://www.w3.org/1999/html"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-title"> Name</span><span class="fa fa-caret-down"></span></button><ul class="dropdown-menu"><li data-original-index="0" data-toggle="tooltip" data-placement="top"><a data-select-value="name" true="">Name</a></li><li data-original-index="1" data-toggle="tooltip" data-placement="top"><a data-select-value="status" true="">Status</a></li></ul><select name="clusters__filter__q_field"><option selected="selected" value="name" true="">Name</option><option value="status" true="">Status</option></select></div>
+
+      
+      <input class="form-control" name="clusters__filter__q" type="text">
+      <button type="submit" class="btn btn-default " id="clusters__action_filter">Filter</button>
+    </div>
+  
+
+
+
+
+  
+  
+    
+<a id="clusters__action_cluster_guide" class="btn data-table-action btn-default " href="http://172.18.78.25:8080/project/data_processing/clusters/cluster_guide" title="Cluster Creation Guide"> Cluster Creation Guide</a>
+
+  
+    
+<a id="clusters__action_create" class="btn data-table-action btn-default ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/create-cluster" title="Launch Cluster"><span class="fa fa-plus"></span> Launch Cluster</a>
+
+  
+    
+<a id="clusters__action_configure" style="display: none" class="btn data-table-action btn-default ajax-modal configure-cluster-btn" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster" title="Configure Cluster"><span class="fa fa-plus"></span> Configure Cluster</a>
+
+  
+    
+<button data-batch-action="true" id="clusters__action_delete" class="data-table-action btn-danger btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="clusters__delete"><span class="fa fa-trash"></span> Delete Clusters</button>
+
+  
+
+  
+  
+    <div class="table_actions_menu">
+      <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+        
+          More Actions
+        
+        <span class="fa fa-caret-down"></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+      
+        <li>
+          
+<button data-batch-action="true" id="clusters__action_make_public" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_public"> Make public</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="clusters__action_make_private" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_private"> Make private</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="clusters__action_make_protected" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_protected"> Make protected</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="clusters__action_make_unprotected" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_unprotected"> Make unprotected</button>
+
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+</div>
+
+      </caption>
+    
+   <thead>
+  
+      
+  
+  
+      
+      <tr class="table_column_header">
+        
+          <th class="multi_select_column">
+            
+            
+          <div class="themable-checkbox"><input id="ui-id-1" class="table-row-multi-select multi-select-header" type="checkbox"><label for="ui-id-1"></label></div></th>
+        
+          <th class="sortable anchor normal_column">
+            Name
+            
+          </th>
+        
+          <th class="sortable normal_column">
+            Plugin
+            
+          </th>
+        
+          <th class="sortable normal_column">
+            Version
+            
+          </th>
+        
+          <th class="sortable normal_column">
+            Status
+            
+          </th>
+        
+          <th class="sortable normal_column">
+            Health
+            
+          </th>
+        
+          <th class="sortable normal_column">
+            Instances Count
+            
+          </th>
+        
+          <th class="sortable normal_column">
+            Uptime
+            
+          </th>
+        
+          <th class="actions_column">
+            Actions
+            
+          </th>
+        
+      </tr>
+      
+  
+    </thead>
+  
+    <tbody>
+    
+      <tr class="ajax-update status_down" data-display="ml-vanilla" data-display-key="name" data-object-id="fd47fcc5-6eba-4035-9ad6-cce0c5720f3c" data-update-interval="2500" data-update-url="/project/data_processing/clusters/?action=row_update&amp;table=clusters&amp;obj_id=fd47fcc5-6eba-4035-9ad6-cce0c5720f3c" id="clusters__row__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="3b7cbc73-6070-4f60-a584-c9bdeb710deb" name="object_ids" value="fd47fcc5-6eba-4035-9ad6-cce0c5720f3c" type="checkbox"><label for="3b7cbc73-6070-4f60-a584-c9bdeb710deb"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/cluster/fd47fcc5-6eba-4035-9ad6-cce0c5720f3c">ml-vanilla</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column">
+            Error&nbsp;<span class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Creating cluster failed for the following reason(s): [Errno 2] No such file or directory: '/home/lelyakin/best_work/sahara/sahara/plugins/vanilla/hadoop2/resources/spark-cleanup.cron'"></span></td><td class="sortable normal_column"><span class="label label-default">UNKNOWN</span></td><td class="sortable normal_column">
+            3
+        </td><td class="sortable normal_column">
+            5 days, 9:11:22
+        </td><td class="actions_column"><div class="btn-group"><button data-batch-action="true" id="clusters__row_fd47fcc5-6eba-4035-9ad6-cce0c5720f3c__action_delete" class="data-table-action btn-sm btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="clusters__delete__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c"> Delete Cluster</button><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="clusters__row_fd47fcc5-6eba-4035-9ad6-cce0c5720f3c__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_public__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c"> Make public</button></li><li><button data-batch-action="true" id="clusters__row_fd47fcc5-6eba-4035-9ad6-cce0c5720f3c__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_private__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c"> Make private</button></li><li><button data-batch-action="true" id="clusters__row_fd47fcc5-6eba-4035-9ad6-cce0c5720f3c__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_protected__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c"> Make protected</button></li><li><button data-batch-action="true" id="clusters__row_fd47fcc5-6eba-4035-9ad6-cce0c5720f3c__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="clusters__make_unprotected__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c"> Make unprotected</button></li><li><button data-batch-action="true" id="clusters__row_fd47fcc5-6eba-4035-9ad6-cce0c5720f3c__action_check_cluster" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="clusters__check_cluster__fd47fcc5-6eba-4035-9ad6-cce0c5720f3c"> Start Verification</button></li></ul></div></td>
+</tr>
+
+    
+    </tbody>
+  
+  
+    
+    <tfoot>
+      
+      <tr>
+        <td colspan="9">
+          <span class="table_count">Displaying 1 item</span>
+          
+          
+          
+        </td>
+      </tr>
+    </tfoot>
+    
+  
+  </table>
+
+  
+  </form>
+</div>
+
+
+
+    </div>
+    
+    <div id="cluster_tabs__clusters_templates_tab" class="tab-pane">
+      
+
+<div class="table_wrapper">
+  <form class="ng-pristine ng-valid" action="/project/data_processing/clusters/" method="POST"><input name="csrfmiddlewaretoken" value="hmi1wZ8X39b9qWscEKdaaxvAn2QqdfIe" type="hidden">
+  
+
+   <table id="cluster_templates" class="table table-striped datatable  tablesorter tablesorter-default">
+    
+      <caption>
+        
+        
+<div class="table_actions clearfix">
+
+  
+    <div class="table_search">
+      
+        
+
+<div class="themable-select dropdown " xmlns="http://www.w3.org/1999/html"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-title"> Name</span><span class="fa fa-caret-down"></span></button><ul class="dropdown-menu"><li data-original-index="0" data-toggle="tooltip" data-placement="top"><a data-select-value="name" true="">Name</a></li><li data-original-index="1" data-toggle="tooltip" data-placement="top"><a data-select-value="plugin_name" true="">Plugin</a></li><li data-original-index="2" data-toggle="tooltip" data-placement="top"><a data-select-value="hadoop_version" true="">Version</a></li><li data-original-index="3" data-toggle="tooltip" data-placement="top"><a data-select-value="description">Description</a></li></ul><select name="cluster_templates__filter__q_field"><option selected="selected" value="name" true="">Name</option><option value="plugin_name" true="">Plugin</option><option value="hadoop_version" true="">Version</option><option value="description">Description</option></select></div>
+
+      
+      <input class="form-control" name="cluster_templates__filter__q" type="text">
+      <button type="submit" class="btn btn-default " id="cluster_templates__action_filter">Filter</button>
+    </div>
+  
+
+
+
+
+  
+  
+    
+<a id="cluster_templates__action_create" class="btn data-table-action btn-default ajax-modal create-clustertemplate-btn" href="http://172.18.78.25:8080/project/data_processing/clusters/create-cluster-template" title="Create Template"><span class="fa fa-plus"></span> Create Template</a>
+
+  
+    
+<a id="cluster_templates__action_configure" style="display: none" class="btn data-table-action btn-default ajax-modal configure-clustertemplate-btn" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster-template" title="Configure Cluster Template"><span class="fa fa-plus"></span> Configure Cluster Template</a>
+
+  
+    
+<button data-batch-action="true" id="cluster_templates__action_delete" class="data-table-action btn-danger btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__delete"><span class="fa fa-trash"></span> Delete Templates</button>
+
+  
+
+  
+  
+    <div class="table_actions_menu">
+      <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+        
+          More Actions
+        
+        <span class="fa fa-caret-down"></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+      
+        <li>
+          
+<button data-batch-action="true" id="cluster_templates__action_make_public" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_public"> Make public</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="cluster_templates__action_make_private" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_private"> Make private</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="cluster_templates__action_make_protected" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_protected"> Make protected</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="cluster_templates__action_make_unprotected" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_unprotected"> Make unprotected</button>
+
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+</div>
+
+      </caption>
+    
+   <thead>
+  
+      
+  
+  
+      
+      <tr class="table_column_header tablesorter-headerRow">
+        
+          <th tabindex="0" data-column="0" class="multi_select_column tablesorter-header sorter-false"><div class="tablesorter-header-inner">
+            
+            
+          <div class="themable-checkbox"><input id="ui-id-2" class="table-row-multi-select multi-select-header" type="checkbox"><label for="ui-id-2"></label></div><i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="1" class="sortable anchor normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Name
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="2" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Plugin
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="3" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Version
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="4" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Node Groups
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="5" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Description
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="6" class="actions_column tablesorter-header sorter-false"><div class="tablesorter-header-inner">
+            Actions
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+      </tr>
+      
+  
+    </thead>
+  
+    <tbody>
+    
+      <tr class="" data-display="ambari" data-display-key="name" data-object-id="2c76e0d3-56cd-4d28-bb4f-4808e538c7b9" id="cluster_templates__row__2c76e0d3-56cd-4d28-bb4f-4808e538c7b9">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="369dabf8-126c-4330-add7-bdce89e3ba0f" name="object_ids" value="2c76e0d3-56cd-4d28-bb4f-4808e538c7b9" type="checkbox"><label for="369dabf8-126c-4330-add7-bdce89e3ba0f"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/2c76e0d3-56cd-4d28-bb4f-4808e538c7b9">ambari</a></td><td class="sortable normal_column">
+            ambari
+        </td><td class="sortable normal_column">
+            2.4
+        </td><td class="sortable normal_column"><ul><li>ml-master: 1</li><li>master-edp: 1</li><li>worker: 3</li></ul></td><td class="sortable normal_column"></td><td class="actions_column"><div class="btn-group"><a id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_create cluster" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster?cluster_template_id=2c76e0d3-56cd-4d28-bb4f-4808e538c7b9&amp;hadoop_version=2.4&amp;plugin_name=ambari"> Launch Cluster</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_edit" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/2c76e0d3-56cd-4d28-bb4f-4808e538c7b9/edit"> Edit Template</a></li><li><a id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/2c76e0d3-56cd-4d28-bb4f-4808e538c7b9/copy"> Copy Template</a></li><li><button data-batch-action="true" id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__delete__2c76e0d3-56cd-4d28-bb4f-4808e538c7b9"> Delete Template</button></li><li><button data-batch-action="true" id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_public__2c76e0d3-56cd-4d28-bb4f-4808e538c7b9"> Make public</button></li><li><button data-batch-action="true" id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_private__2c76e0d3-56cd-4d28-bb4f-4808e538c7b9"> Make private</button></li><li><button data-batch-action="true" id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_protected__2c76e0d3-56cd-4d28-bb4f-4808e538c7b9"> Make protected</button></li><li><button data-batch-action="true" id="cluster_templates__row_2c76e0d3-56cd-4d28-bb4f-4808e538c7b9__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_unprotected__2c76e0d3-56cd-4d28-bb4f-4808e538c7b9"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ml-cluster" data-display-key="name" data-object-id="38b4e146-1d39-4822-bad2-fef2bf304a52" id="cluster_templates__row__38b4e146-1d39-4822-bad2-fef2bf304a52">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="6e365a56-9909-40d8-8ecf-a14a58c347df" name="object_ids" value="38b4e146-1d39-4822-bad2-fef2bf304a52" type="checkbox"><label for="6e365a56-9909-40d8-8ecf-a14a58c347df"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/38b4e146-1d39-4822-bad2-fef2bf304a52">ml-cluster</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>master-vanilla-2: 1</li><li>worker-vanilla-2: 2</li></ul></td><td class="sortable normal_column"></td><td class="actions_column"><div class="btn-group"><a id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_create cluster" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster?cluster_template_id=38b4e146-1d39-4822-bad2-fef2bf304a52&amp;hadoop_version=2.7.1&amp;plugin_name=vanilla"> Launch Cluster</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_edit" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/38b4e146-1d39-4822-bad2-fef2bf304a52/edit"> Edit Template</a></li><li><a id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/38b4e146-1d39-4822-bad2-fef2bf304a52/copy"> Copy Template</a></li><li><button data-batch-action="true" id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__delete__38b4e146-1d39-4822-bad2-fef2bf304a52"> Delete Template</button></li><li><button data-batch-action="true" id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_public__38b4e146-1d39-4822-bad2-fef2bf304a52"> Make public</button></li><li><button data-batch-action="true" id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_private__38b4e146-1d39-4822-bad2-fef2bf304a52"> Make private</button></li><li><button data-batch-action="true" id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_protected__38b4e146-1d39-4822-bad2-fef2bf304a52"> Make protected</button></li><li><button data-batch-action="true" id="cluster_templates__row_38b4e146-1d39-4822-bad2-fef2bf304a52__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_unprotected__38b4e146-1d39-4822-bad2-fef2bf304a52"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ml-final" data-display-key="name" data-object-id="39dfc852-8588-4b61-8d2b-eb08a67ab240" id="cluster_templates__row__39dfc852-8588-4b61-8d2b-eb08a67ab240">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="fa7c37ad-bb1a-4110-90f0-cd26d255c433" name="object_ids" value="39dfc852-8588-4b61-8d2b-eb08a67ab240" type="checkbox"><label for="fa7c37ad-bb1a-4110-90f0-cd26d255c433"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/39dfc852-8588-4b61-8d2b-eb08a67ab240">ml-final</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>worker-vanilla-3: 2</li><li>master-vanilla-4: 1</li></ul></td><td class="sortable normal_column"></td><td class="actions_column"><div class="btn-group"><a id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_create cluster" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster?cluster_template_id=39dfc852-8588-4b61-8d2b-eb08a67ab240&amp;hadoop_version=2.7.1&amp;plugin_name=vanilla"> Launch Cluster</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_edit" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/39dfc852-8588-4b61-8d2b-eb08a67ab240/edit"> Edit Template</a></li><li><a id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/39dfc852-8588-4b61-8d2b-eb08a67ab240/copy"> Copy Template</a></li><li><button data-batch-action="true" id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__delete__39dfc852-8588-4b61-8d2b-eb08a67ab240"> Delete Template</button></li><li><button data-batch-action="true" id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_public__39dfc852-8588-4b61-8d2b-eb08a67ab240"> Make public</button></li><li><button data-batch-action="true" id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_private__39dfc852-8588-4b61-8d2b-eb08a67ab240"> Make private</button></li><li><button data-batch-action="true" id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_protected__39dfc852-8588-4b61-8d2b-eb08a67ab240"> Make protected</button></li><li><button data-batch-action="true" id="cluster_templates__row_39dfc852-8588-4b61-8d2b-eb08a67ab240__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_unprotected__39dfc852-8588-4b61-8d2b-eb08a67ab240"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ml-cluster-vanilla" data-display-key="name" data-object-id="dc9de379-c0b1-4f32-b86d-ddd5fec485f1" id="cluster_templates__row__dc9de379-c0b1-4f32-b86d-ddd5fec485f1">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="bc6064dc-6d58-47d4-9bd3-f1309789e3d8" name="object_ids" value="dc9de379-c0b1-4f32-b86d-ddd5fec485f1" type="checkbox"><label for="bc6064dc-6d58-47d4-9bd3-f1309789e3d8"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/dc9de379-c0b1-4f32-b86d-ddd5fec485f1">ml-cluster-vanilla</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>master-vanilla: 1</li><li>worker-vanilla: 2</li></ul></td><td class="sortable normal_column"></td><td class="actions_column"><div class="btn-group"><a id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_create cluster" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster?cluster_template_id=dc9de379-c0b1-4f32-b86d-ddd5fec485f1&amp;hadoop_version=2.7.1&amp;plugin_name=vanilla"> Launch Cluster</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_edit" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/dc9de379-c0b1-4f32-b86d-ddd5fec485f1/edit"> Edit Template</a></li><li><a id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/dc9de379-c0b1-4f32-b86d-ddd5fec485f1/copy"> Copy Template</a></li><li><button data-batch-action="true" id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__delete__dc9de379-c0b1-4f32-b86d-ddd5fec485f1"> Delete Template</button></li><li><button data-batch-action="true" id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_public__dc9de379-c0b1-4f32-b86d-ddd5fec485f1"> Make public</button></li><li><button data-batch-action="true" id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_private__dc9de379-c0b1-4f32-b86d-ddd5fec485f1"> Make private</button></li><li><button data-batch-action="true" id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_protected__dc9de379-c0b1-4f32-b86d-ddd5fec485f1"> Make protected</button></li><li><button data-batch-action="true" id="cluster_templates__row_dc9de379-c0b1-4f32-b86d-ddd5fec485f1__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_unprotected__dc9de379-c0b1-4f32-b86d-ddd5fec485f1"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ml-cluster-van-spar" data-display-key="name" data-object-id="eaa0bd97-ab54-43df-83ab-77a9774d7358" id="cluster_templates__row__eaa0bd97-ab54-43df-83ab-77a9774d7358">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="01253e67-68a2-461d-a43f-94f12fd50232" name="object_ids" value="eaa0bd97-ab54-43df-83ab-77a9774d7358" type="checkbox"><label for="01253e67-68a2-461d-a43f-94f12fd50232"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/eaa0bd97-ab54-43df-83ab-77a9774d7358">ml-cluster-van-spar</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>master-vanilla-3: 1</li><li>worker-vanilla-2: 2</li></ul></td><td class="sortable normal_column"></td><td class="actions_column"><div class="btn-group"><a id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_create cluster" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-cluster?cluster_template_id=eaa0bd97-ab54-43df-83ab-77a9774d7358&amp;hadoop_version=2.7.1&amp;plugin_name=vanilla"> Launch Cluster</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_edit" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/eaa0bd97-ab54-43df-83ab-77a9774d7358/edit"> Edit Template</a></li><li><a id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/cluster-template/eaa0bd97-ab54-43df-83ab-77a9774d7358/copy"> Copy Template</a></li><li><button data-batch-action="true" id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__delete__eaa0bd97-ab54-43df-83ab-77a9774d7358"> Delete Template</button></li><li><button data-batch-action="true" id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_public__eaa0bd97-ab54-43df-83ab-77a9774d7358"> Make public</button></li><li><button data-batch-action="true" id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_private__eaa0bd97-ab54-43df-83ab-77a9774d7358"> Make private</button></li><li><button data-batch-action="true" id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_protected__eaa0bd97-ab54-43df-83ab-77a9774d7358"> Make protected</button></li><li><button data-batch-action="true" id="cluster_templates__row_eaa0bd97-ab54-43df-83ab-77a9774d7358__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="cluster_templates__make_unprotected__eaa0bd97-ab54-43df-83ab-77a9774d7358"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+    </tbody>
+  
+  
+    
+    <tfoot>
+      
+      <tr>
+        <td data-column="0" colspan="7">
+          <span class="table_count"></span>
+          
+          
+          
+        </td>
+      </tr>
+    </tfoot>
+    
+  
+  </table>
+
+  
+  </form>
+</div>
+
+
+
+    </div>
+    
+    <div id="cluster_tabs__node_group_templates_tab" class="tab-pane active">
+      
+
+<div class="table_wrapper">
+  <form class="ng-pristine ng-valid" action="/project/data_processing/clusters/" method="POST"><input name="csrfmiddlewaretoken" value="hmi1wZ8X39b9qWscEKdaaxvAn2QqdfIe" type="hidden">
+  
+
+   <table id="nodegroup_templates" class="table table-striped datatable  tablesorter tablesorter-default">
+    
+      <caption>
+        
+        
+<div class="table_actions clearfix">
+
+  
+    <div class="table_search">
+      
+        
+
+<div class="themable-select dropdown " xmlns="http://www.w3.org/1999/html"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="dropdown-title"> Name</span><span class="fa fa-caret-down"></span></button><ul class="dropdown-menu"><li data-original-index="0" data-toggle="tooltip" data-placement="top"><a data-select-value="name" true="">Name</a></li><li data-original-index="1" data-toggle="tooltip" data-placement="top"><a data-select-value="plugin_name" true="">Plugin</a></li><li data-original-index="2" data-toggle="tooltip" data-placement="top"><a data-select-value="hadoop_version" true="">Version</a></li></ul><select name="nodegroup_templates__filter__q_field"><option selected="selected" value="name" true="">Name</option><option value="plugin_name" true="">Plugin</option><option value="hadoop_version" true="">Version</option></select></div>
+
+      
+      <input class="form-control" name="nodegroup_templates__filter__q" type="text">
+      <button type="submit" class="btn btn-default " id="nodegroup_templates__action_filter">Filter</button>
+    </div>
+  
+
+
+
+
+  
+  
+    
+<a id="nodegroup_templates__action_create" class="btn data-table-action btn-default ajax-modal create-nodegrouptemplate-btn" href="http://172.18.78.25:8080/project/data_processing/clusters/create-nodegroup-template" title="Create Template"><span class="fa fa-plus"></span> Create Template</a>
+
+  
+    
+<a id="nodegroup_templates__action_configure" style="display: none" class="btn data-table-action btn-default ajax-modal configure-nodegrouptemplate-btn" href="http://172.18.78.25:8080/project/data_processing/clusters/configure-nodegroup-template" title="Configure Template"><span class="fa fa-plus"></span> Configure Template</a>
+
+  
+    
+<button data-batch-action="true" id="nodegroup_templates__action_delete" class="data-table-action btn-danger btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete"><span class="fa fa-trash"></span> Delete Templates</button>
+
+  
+
+  
+  
+    <div class="table_actions_menu">
+      <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+        
+          More Actions
+        
+        <span class="fa fa-caret-down"></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+      
+        <li>
+          
+<button data-batch-action="true" id="nodegroup_templates__action_make_public" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public"> Make public</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="nodegroup_templates__action_make_private" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private"> Make private</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="nodegroup_templates__action_make_protected" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected"> Make protected</button>
+
+        </li>
+      
+        <li>
+          
+<button data-batch-action="true" id="nodegroup_templates__action_make_unprotected" class="data-table-action btn-default btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected"> Make unprotected</button>
+
+        </li>
+      
+      </ul>
+    </div>
+  
+
+
+</div>
+
+      </caption>
+    
+   <thead>
+  
+      
+  
+  
+      
+      <tr class="table_column_header tablesorter-headerRow">
+        
+          <th tabindex="0" data-column="0" class="multi_select_column tablesorter-header sorter-false"><div class="tablesorter-header-inner">
+            
+            
+          <div class="themable-checkbox"><input id="ui-id-3" class="table-row-multi-select multi-select-header" type="checkbox"><label for="ui-id-3"></label></div><i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="1" class="sortable anchor normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Name
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="2" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Plugin
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="3" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Version
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="4" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Node Processes
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="5" class="actions_column tablesorter-header sorter-false"><div class="tablesorter-header-inner">
+            Actions
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+      </tr>
+      
+  
+    </thead>
+  
+    <tbody>
+    
+      <tr class="" data-display="worker-vanilla-3" data-display-key="name" data-object-id="0f46a03e-2656-46e9-a719-0c0bea70b099" id="nodegroup_templates__row__0f46a03e-2656-46e9-a719-0c0bea70b099">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="aa050218-f4ca-42af-aff3-cc9c4213e36e" name="object_ids" value="0f46a03e-2656-46e9-a719-0c0bea70b099" type="checkbox"><label for="aa050218-f4ca-42af-aff3-cc9c4213e36e"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/0f46a03e-2656-46e9-a719-0c0bea70b099">worker-vanilla-3</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>nodemanager</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/0f46a03e-2656-46e9-a719-0c0bea70b099/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/0f46a03e-2656-46e9-a719-0c0bea70b099/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__0f46a03e-2656-46e9-a719-0c0bea70b099"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__0f46a03e-2656-46e9-a719-0c0bea70b099"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__0f46a03e-2656-46e9-a719-0c0bea70b099"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__0f46a03e-2656-46e9-a719-0c0bea70b099"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_0f46a03e-2656-46e9-a719-0c0bea70b099__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__0f46a03e-2656-46e9-a719-0c0bea70b099"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="master-vanilla-4" data-display-key="name" data-object-id="2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f" id="nodegroup_templates__row__2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="9232cc81-67ea-4fcf-9e9b-85b4e8c07a4b" name="object_ids" value="2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f" type="checkbox"><label for="9232cc81-67ea-4fcf-9e9b-85b4e8c07a4b"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f">master-vanilla-4</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>namenode</li><li>hiveserver</li><li>historyserver</li><li>oozie</li><li>resourcemanager</li><li>spark history server</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__2377eb8b-f7f6-4fac-bc2a-51f5d56aad9f"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="worker-11-16-44-446" data-display-key="name" data-object-id="25ee508a-1f73-479e-ad7d-075657df7e23" id="nodegroup_templates__row__25ee508a-1f73-479e-ad7d-075657df7e23">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="2b6262c4-e49e-4852-8714-54cb7e60fa32" name="object_ids" value="25ee508a-1f73-479e-ad7d-075657df7e23" type="checkbox"><label for="2b6262c4-e49e-4852-8714-54cb7e60fa32"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/25ee508a-1f73-479e-ad7d-075657df7e23">worker-11-16-44-446</a></td><td class="sortable normal_column">
+            fake
+        </td><td class="sortable normal_column">
+            0.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>tasktracker</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/25ee508a-1f73-479e-ad7d-075657df7e23/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/25ee508a-1f73-479e-ad7d-075657df7e23/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__25ee508a-1f73-479e-ad7d-075657df7e23"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__25ee508a-1f73-479e-ad7d-075657df7e23"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__25ee508a-1f73-479e-ad7d-075657df7e23"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__25ee508a-1f73-479e-ad7d-075657df7e23"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_25ee508a-1f73-479e-ad7d-075657df7e23__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__25ee508a-1f73-479e-ad7d-075657df7e23"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="master-vanilla" data-display-key="name" data-object-id="29b46f51-1fd6-401f-8e77-d6c8c3f41e7a" id="nodegroup_templates__row__29b46f51-1fd6-401f-8e77-d6c8c3f41e7a">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="9059ac16-679c-40ce-a822-eabd80b1f450" name="object_ids" value="29b46f51-1fd6-401f-8e77-d6c8c3f41e7a" type="checkbox"><label for="9059ac16-679c-40ce-a822-eabd80b1f450"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/29b46f51-1fd6-401f-8e77-d6c8c3f41e7a">master-vanilla</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>namenode</li><li>hiveserver</li><li>historyserver</li><li>resourcemanager</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/29b46f51-1fd6-401f-8e77-d6c8c3f41e7a/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/29b46f51-1fd6-401f-8e77-d6c8c3f41e7a/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__29b46f51-1fd6-401f-8e77-d6c8c3f41e7a"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__29b46f51-1fd6-401f-8e77-d6c8c3f41e7a"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__29b46f51-1fd6-401f-8e77-d6c8c3f41e7a"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__29b46f51-1fd6-401f-8e77-d6c8c3f41e7a"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_29b46f51-1fd6-401f-8e77-d6c8c3f41e7a__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__29b46f51-1fd6-401f-8e77-d6c8c3f41e7a"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="master-edp" data-display-key="name" data-object-id="5628f71c-9775-41f4-830c-b8541ee51f1e" id="nodegroup_templates__row__5628f71c-9775-41f4-830c-b8541ee51f1e">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="8be27441-cda8-49ea-b78a-e7287e524f87" name="object_ids" value="5628f71c-9775-41f4-830c-b8541ee51f1e" type="checkbox"><label for="8be27441-cda8-49ea-b78a-e7287e524f87"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/5628f71c-9775-41f4-830c-b8541ee51f1e">master-edp</a></td><td class="sortable normal_column">
+            ambari
+        </td><td class="sortable normal_column">
+            2.4
+        </td><td class="sortable normal_column"><ul><li>Hive Metastore</li><li>HiveServer</li><li>Oozie</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/5628f71c-9775-41f4-830c-b8541ee51f1e/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/5628f71c-9775-41f4-830c-b8541ee51f1e/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__5628f71c-9775-41f4-830c-b8541ee51f1e"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__5628f71c-9775-41f4-830c-b8541ee51f1e"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__5628f71c-9775-41f4-830c-b8541ee51f1e"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__5628f71c-9775-41f4-830c-b8541ee51f1e"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_5628f71c-9775-41f4-830c-b8541ee51f1e__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__5628f71c-9775-41f4-830c-b8541ee51f1e"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="worker-vanilla-2" data-display-key="name" data-object-id="6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc" id="nodegroup_templates__row__6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="4551d33c-2cd4-400c-8c56-48b1e73be0a9" name="object_ids" value="6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc" type="checkbox"><label for="4551d33c-2cd4-400c-8c56-48b1e73be0a9"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc">worker-vanilla-2</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>nodemanager</li><li>slave</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__6b9b98ea-d662-4e86-9b1e-5e539f7ed5bc"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="worker" data-display-key="name" data-object-id="6dc5383b-e34e-4bb5-9e53-15d9d04bff52" id="nodegroup_templates__row__6dc5383b-e34e-4bb5-9e53-15d9d04bff52">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="59932cd6-aaaa-4e6a-a645-cb9ed23ffeac" name="object_ids" value="6dc5383b-e34e-4bb5-9e53-15d9d04bff52" type="checkbox"><label for="59932cd6-aaaa-4e6a-a645-cb9ed23ffeac"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/6dc5383b-e34e-4bb5-9e53-15d9d04bff52">worker</a></td><td class="sortable normal_column">
+            ambari
+        </td><td class="sortable normal_column">
+            2.4
+        </td><td class="sortable normal_column"><ul><li>DataNode</li><li>NodeManager</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/6dc5383b-e34e-4bb5-9e53-15d9d04bff52/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/6dc5383b-e34e-4bb5-9e53-15d9d04bff52/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__6dc5383b-e34e-4bb5-9e53-15d9d04bff52"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__6dc5383b-e34e-4bb5-9e53-15d9d04bff52"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__6dc5383b-e34e-4bb5-9e53-15d9d04bff52"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__6dc5383b-e34e-4bb5-9e53-15d9d04bff52"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_6dc5383b-e34e-4bb5-9e53-15d9d04bff52__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__6dc5383b-e34e-4bb5-9e53-15d9d04bff52"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="worker-vanilla-2-copy" data-display-key="name" data-object-id="887a9f4a-d481-4522-9b1c-0d3e20701c17" id="nodegroup_templates__row__887a9f4a-d481-4522-9b1c-0d3e20701c17">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="8d4a9872-56e0-4a0f-b0b3-3ccd0c5b409a" name="object_ids" value="887a9f4a-d481-4522-9b1c-0d3e20701c17" type="checkbox"><label for="8d4a9872-56e0-4a0f-b0b3-3ccd0c5b409a"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/887a9f4a-d481-4522-9b1c-0d3e20701c17">worker-vanilla-2-copy</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>nodemanager</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/887a9f4a-d481-4522-9b1c-0d3e20701c17/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/887a9f4a-d481-4522-9b1c-0d3e20701c17/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__887a9f4a-d481-4522-9b1c-0d3e20701c17"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__887a9f4a-d481-4522-9b1c-0d3e20701c17"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__887a9f4a-d481-4522-9b1c-0d3e20701c17"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__887a9f4a-d481-4522-9b1c-0d3e20701c17"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_887a9f4a-d481-4522-9b1c-0d3e20701c17__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__887a9f4a-d481-4522-9b1c-0d3e20701c17"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="master-vanilla-2" data-display-key="name" data-object-id="9003819c-4132-4775-85f6-20729450d42f" id="nodegroup_templates__row__9003819c-4132-4775-85f6-20729450d42f">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="794c618c-f896-42fb-9e98-68cf95edf4b4" name="object_ids" value="9003819c-4132-4775-85f6-20729450d42f" type="checkbox"><label for="794c618c-f896-42fb-9e98-68cf95edf4b4"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/9003819c-4132-4775-85f6-20729450d42f">master-vanilla-2</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>namenode</li><li>historyserver</li><li>resourcemanager</li><li>oozie</li><li>hiveserver</li><li>spark history server</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/9003819c-4132-4775-85f6-20729450d42f/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/9003819c-4132-4775-85f6-20729450d42f/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__9003819c-4132-4775-85f6-20729450d42f"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__9003819c-4132-4775-85f6-20729450d42f"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__9003819c-4132-4775-85f6-20729450d42f"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__9003819c-4132-4775-85f6-20729450d42f"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_9003819c-4132-4775-85f6-20729450d42f__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__9003819c-4132-4775-85f6-20729450d42f"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ml-worker-1-sept" data-display-key="name" data-object-id="a5216207-c916-4e26-a085-be09d8d260ed" id="nodegroup_templates__row__a5216207-c916-4e26-a085-be09d8d260ed">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="51286cf2-9fa5-41c3-bbc2-31a5311e821f" name="object_ids" value="a5216207-c916-4e26-a085-be09d8d260ed" type="checkbox"><label for="51286cf2-9fa5-41c3-bbc2-31a5311e821f"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/a5216207-c916-4e26-a085-be09d8d260ed">ml-worker-1-sept</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>nodemanager</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/a5216207-c916-4e26-a085-be09d8d260ed/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/a5216207-c916-4e26-a085-be09d8d260ed/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__a5216207-c916-4e26-a085-be09d8d260ed"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__a5216207-c916-4e26-a085-be09d8d260ed"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__a5216207-c916-4e26-a085-be09d8d260ed"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__a5216207-c916-4e26-a085-be09d8d260ed"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_a5216207-c916-4e26-a085-be09d8d260ed__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__a5216207-c916-4e26-a085-be09d8d260ed"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="master-vanilla-3" data-display-key="name" data-object-id="ab0dcb47-4030-4436-8b6e-cc0c17f9246d" id="nodegroup_templates__row__ab0dcb47-4030-4436-8b6e-cc0c17f9246d">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="0b13a695-0aea-4ceb-b889-7d4755df8604" name="object_ids" value="ab0dcb47-4030-4436-8b6e-cc0c17f9246d" type="checkbox"><label for="0b13a695-0aea-4ceb-b889-7d4755df8604"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/ab0dcb47-4030-4436-8b6e-cc0c17f9246d">master-vanilla-3</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>namenode</li><li>hiveserver</li><li>historyserver</li><li>oozie</li><li>resourcemanager</li><li>sparkmaster</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/ab0dcb47-4030-4436-8b6e-cc0c17f9246d/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/ab0dcb47-4030-4436-8b6e-cc0c17f9246d/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__ab0dcb47-4030-4436-8b6e-cc0c17f9246d"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__ab0dcb47-4030-4436-8b6e-cc0c17f9246d"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__ab0dcb47-4030-4436-8b6e-cc0c17f9246d"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__ab0dcb47-4030-4436-8b6e-cc0c17f9246d"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_ab0dcb47-4030-4436-8b6e-cc0c17f9246d__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__ab0dcb47-4030-4436-8b6e-cc0c17f9246d"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ml-master" data-display-key="name" data-object-id="b5081f64-5900-4b03-8996-821f09987358" id="nodegroup_templates__row__b5081f64-5900-4b03-8996-821f09987358">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="76327e8e-41de-477e-bc72-46e7bff9017d" name="object_ids" value="b5081f64-5900-4b03-8996-821f09987358" type="checkbox"><label for="76327e8e-41de-477e-bc72-46e7bff9017d"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/b5081f64-5900-4b03-8996-821f09987358">ml-master</a></td><td class="sortable normal_column">
+            ambari
+        </td><td class="sortable normal_column">
+            2.4
+        </td><td class="sortable normal_column"><ul><li>NameNode</li><li>SecondaryNameNode</li><li>Ambari</li><li>ZooKeeper</li><li>YARN Timeline Server</li><li>MapReduce History Server</li><li>ResourceManager</li><li>Kafka Broker</li><li>Spark History Server</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/b5081f64-5900-4b03-8996-821f09987358/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/b5081f64-5900-4b03-8996-821f09987358/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__b5081f64-5900-4b03-8996-821f09987358"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__b5081f64-5900-4b03-8996-821f09987358"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__b5081f64-5900-4b03-8996-821f09987358"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__b5081f64-5900-4b03-8996-821f09987358"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_b5081f64-5900-4b03-8996-821f09987358__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__b5081f64-5900-4b03-8996-821f09987358"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="worker-vanilla" data-display-key="name" data-object-id="c53832da-6e7b-449e-a166-9f9ce1718d03" id="nodegroup_templates__row__c53832da-6e7b-449e-a166-9f9ce1718d03">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="90d611a7-db28-4fab-8694-4572a5a88598" name="object_ids" value="c53832da-6e7b-449e-a166-9f9ce1718d03" type="checkbox"><label for="90d611a7-db28-4fab-8694-4572a5a88598"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/c53832da-6e7b-449e-a166-9f9ce1718d03">worker-vanilla</a></td><td class="sortable normal_column">
+            vanilla
+        </td><td class="sortable normal_column">
+            2.7.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>oozie</li><li>nodemanager</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/c53832da-6e7b-449e-a166-9f9ce1718d03/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/c53832da-6e7b-449e-a166-9f9ce1718d03/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__c53832da-6e7b-449e-a166-9f9ce1718d03"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__c53832da-6e7b-449e-a166-9f9ce1718d03"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__c53832da-6e7b-449e-a166-9f9ce1718d03"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__c53832da-6e7b-449e-a166-9f9ce1718d03"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_c53832da-6e7b-449e-a166-9f9ce1718d03__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__c53832da-6e7b-449e-a166-9f9ce1718d03"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="worker-11-17-53-979" data-display-key="name" data-object-id="fe13c72c-b8a5-4d10-8583-5506d505d3a4" id="nodegroup_templates__row__fe13c72c-b8a5-4d10-8583-5506d505d3a4">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="6f897aaf-53fb-4731-8009-380272892c4e" name="object_ids" value="fe13c72c-b8a5-4d10-8583-5506d505d3a4" type="checkbox"><label for="6f897aaf-53fb-4731-8009-380272892c4e"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/fe13c72c-b8a5-4d10-8583-5506d505d3a4">worker-11-17-53-979</a></td><td class="sortable normal_column">
+            fake
+        </td><td class="sortable normal_column">
+            0.1
+        </td><td class="sortable normal_column"><ul><li>datanode</li><li>tasktracker</li></ul></td><td class="actions_column"><div class="btn-group"><a id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_edit" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/fe13c72c-b8a5-4d10-8583-5506d505d3a4/edit"> Edit Template</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><a id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_copy" class="btn data-table-action ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/node-group-template/fe13c72c-b8a5-4d10-8583-5506d505d3a4/copy"> Copy Template</a></li><li><button data-batch-action="true" id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_delete" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__delete__fe13c72c-b8a5-4d10-8583-5506d505d3a4"> Delete Template</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_make_public" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_public__fe13c72c-b8a5-4d10-8583-5506d505d3a4"> Make public</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_make_private" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_private__fe13c72c-b8a5-4d10-8583-5506d505d3a4"> Make private</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_make_protected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_protected__fe13c72c-b8a5-4d10-8583-5506d505d3a4"> Make protected</button></li><li><button data-batch-action="true" id="nodegroup_templates__row_fe13c72c-b8a5-4d10-8583-5506d505d3a4__action_make_unprotected" class="data-table-action btn-default btn" name="action" help_text="This action cannot be undone." type="submit" value="nodegroup_templates__make_unprotected__fe13c72c-b8a5-4d10-8583-5506d505d3a4"> Make unprotected</button></li></ul></div></td>
+</tr>
+
+    
+    </tbody>
+  
+  
+    
+    <tfoot>
+      
+      <tr>
+        <td data-column="0" colspan="6">
+          <span class="table_count">Displaying 14 items</span>
+          
+          
+          
+        </td>
+      </tr>
+    </tfoot>
+    
+  
+  </table>
+
+  
+  </form>
+</div>
+
+
+
+    </div>
+    
+    <div id="cluster_tabs__image_registry_tab" class="tab-pane">
+      
+
+<div class="table_wrapper">
+  <form class="ng-pristine ng-valid" action="/project/data_processing/clusters/" method="POST"><input name="csrfmiddlewaretoken" value="hmi1wZ8X39b9qWscEKdaaxvAn2QqdfIe" type="hidden">
+  
+
+   <table id="image_registry" class="table table-striped datatable  tablesorter tablesorter-default">
+    
+      <caption>
+        
+        
+<div class="table_actions clearfix">
+
+  
+
+
+
+
+  
+  
+    
+<a id="image_registry__action_register" class="btn data-table-action btn-default ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/register/" title="Register Image"><span class="fa fa-plus"></span> Register Image</a>
+
+  
+    
+<button data-batch-action="true" id="image_registry__action_unregister" class="data-table-action btn-danger btn disabled" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister"><span class="fa fa-trash"></span> Unregister Images</button>
+
+  
+
+  
+  
+
+
+</div>
+
+      </caption>
+    
+   <thead>
+  
+      
+  
+  
+      
+      <tr class="table_column_header tablesorter-headerRow">
+        
+          <th tabindex="0" data-column="0" class="multi_select_column tablesorter-header sorter-false"><div class="tablesorter-header-inner">
+            
+            
+          <div class="themable-checkbox"><input id="ui-id-4" class="table-row-multi-select multi-select-header" type="checkbox"><label for="ui-id-4"></label></div><i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="1" class="sortable anchor normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Image
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="2" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            Tags
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="3" class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">
+            User
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+          <th tabindex="0" data-column="4" class="actions_column tablesorter-header sorter-false"><div class="tablesorter-header-inner">
+            Actions
+            
+          <i class="table-sort-indicator tablesorter-icon"></i></div></th>
+        
+      </tr>
+      
+  
+    </thead>
+  
+    <tbody>
+    
+      <tr class="" data-display="amb2220-ubuntu12" data-display-key="name" data-object-id="bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3" id="image_registry__row__bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="d6c9f2f3-bd07-4145-b068-6a0ff565564c" name="object_ids" value="bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3" type="checkbox"><label for="d6c9f2f3-bd07-4145-b068-6a0ff565564c"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3/">amb2220-ubuntu12</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">2.4</span></li><li><span class="label label-info" id="image-tag">2.3</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__bd7fa5c7-f9a7-436a-b1ca-b27afc9c73e3"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="amb2210-ubuntu14" data-display-key="name" data-object-id="edb91c50-0431-4aaf-aa85-c478ab4bb83f" id="image_registry__row__edb91c50-0431-4aaf-aa85-c478ab4bb83f">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="9c4bfdb3-17c4-42e1-afe6-9486e6bbe01e" name="object_ids" value="edb91c50-0431-4aaf-aa85-c478ab4bb83f" type="checkbox"><label for="9c4bfdb3-17c4-42e1-afe6-9486e6bbe01e"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/edb91c50-0431-4aaf-aa85-c478ab4bb83f/">amb2210-ubuntu14</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">2.4</span></li><li><span class="label label-info" id="image-tag">2.3</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_edb91c50-0431-4aaf-aa85-c478ab4bb83f__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/edb91c50-0431-4aaf-aa85-c478ab4bb83f/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_edb91c50-0431-4aaf-aa85-c478ab4bb83f__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__edb91c50-0431-4aaf-aa85-c478ab4bb83f"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="amb-ubuntu14-tst" data-display-key="name" data-object-id="22508b56-7e8a-49ff-90a6-cb5b49e6efba" id="image_registry__row__22508b56-7e8a-49ff-90a6-cb5b49e6efba">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="844fe5fe-f872-41b5-a558-03a31844c93e" name="object_ids" value="22508b56-7e8a-49ff-90a6-cb5b49e6efba" type="checkbox"><label for="844fe5fe-f872-41b5-a558-03a31844c93e"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/22508b56-7e8a-49ff-90a6-cb5b49e6efba/">amb-ubuntu14-tst</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">2.4</span></li><li><span class="label label-info" id="image-tag">2.3</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_22508b56-7e8a-49ff-90a6-cb5b49e6efba__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/22508b56-7e8a-49ff-90a6-cb5b49e6efba/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_22508b56-7e8a-49ff-90a6-cb5b49e6efba__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__22508b56-7e8a-49ff-90a6-cb5b49e6efba"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="centos7-sahara-ambari" data-display-key="name" data-object-id="159725ba-fa29-460b-b818-71de26509cfd" id="image_registry__row__159725ba-fa29-460b-b818-71de26509cfd">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="daa5d544-e0cd-4d24-b625-3ebb805604e8" name="object_ids" value="159725ba-fa29-460b-b818-71de26509cfd" type="checkbox"><label for="daa5d544-e0cd-4d24-b625-3ebb805604e8"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/159725ba-fa29-460b-b818-71de26509cfd/">centos7-sahara-ambari</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">2.4</span></li></ul></td><td class="sortable normal_column">
+            centos
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_159725ba-fa29-460b-b818-71de26509cfd__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/159725ba-fa29-460b-b818-71de26509cfd/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_159725ba-fa29-460b-b818-71de26509cfd__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__159725ba-fa29-460b-b818-71de26509cfd"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ambari-ubuntu-mirror" data-display-key="name" data-object-id="a324824c-1f45-4643-9214-8ecda435f014" id="image_registry__row__a324824c-1f45-4643-9214-8ecda435f014">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="83021863-a2c1-4618-92d4-a9c8390426c2" name="object_ids" value="a324824c-1f45-4643-9214-8ecda435f014" type="checkbox"><label for="83021863-a2c1-4618-92d4-a9c8390426c2"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/a324824c-1f45-4643-9214-8ecda435f014/">ambari-ubuntu-mirror</a></td><td class="sortable normal_column"><ul class="list-unstyled"></ul></td><td class="sortable normal_column">
+            userNAME
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_a324824c-1f45-4643-9214-8ecda435f014__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/a324824c-1f45-4643-9214-8ecda435f014/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_a324824c-1f45-4643-9214-8ecda435f014__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__a324824c-1f45-4643-9214-8ecda435f014"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="liberty_vanilla" data-display-key="name" data-object-id="1efe9300-f1f3-49c8-9baf-766d5f86c2dd" id="image_registry__row__1efe9300-f1f3-49c8-9baf-766d5f86c2dd">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="20514c5a-a816-4947-ae22-7d3e03a38336" name="object_ids" value="1efe9300-f1f3-49c8-9baf-766d5f86c2dd" type="checkbox"><label for="20514c5a-a816-4947-ae22-7d3e03a38336"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/1efe9300-f1f3-49c8-9baf-766d5f86c2dd/">liberty_vanilla</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">vanilla</span></li><li><span class="label label-info" id="image-tag">2.7.1</span></li></ul></td><td class="sortable normal_column">
+            Ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_1efe9300-f1f3-49c8-9baf-766d5f86c2dd__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/1efe9300-f1f3-49c8-9baf-766d5f86c2dd/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_1efe9300-f1f3-49c8-9baf-766d5f86c2dd__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__1efe9300-f1f3-49c8-9baf-766d5f86c2dd"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="van-ubuntu" data-display-key="name" data-object-id="54e2d469-21e0-44c2-8d92-30729904dc04" id="image_registry__row__54e2d469-21e0-44c2-8d92-30729904dc04">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="3d5a6a6c-8814-43dd-bc26-811bf442441f" name="object_ids" value="54e2d469-21e0-44c2-8d92-30729904dc04" type="checkbox"><label for="3d5a6a6c-8814-43dd-bc26-811bf442441f"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/54e2d469-21e0-44c2-8d92-30729904dc04/">van-ubuntu</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">vanilla</span></li><li><span class="label label-info" id="image-tag">2.7.1</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_54e2d469-21e0-44c2-8d92-30729904dc04__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/54e2d469-21e0-44c2-8d92-30729904dc04/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_54e2d469-21e0-44c2-8d92-30729904dc04__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__54e2d469-21e0-44c2-8d92-30729904dc04"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ambari-ubuntu" data-display-key="name" data-object-id="08040b26-01c2-4391-88fd-181c3f64178d" id="image_registry__row__08040b26-01c2-4391-88fd-181c3f64178d">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="b4973e5f-3ba5-4c63-ad25-f651b9abe709" name="object_ids" value="08040b26-01c2-4391-88fd-181c3f64178d" type="checkbox"><label for="b4973e5f-3ba5-4c63-ad25-f651b9abe709"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/08040b26-01c2-4391-88fd-181c3f64178d/">ambari-ubuntu</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">2.4</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_08040b26-01c2-4391-88fd-181c3f64178d__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/08040b26-01c2-4391-88fd-181c3f64178d/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_08040b26-01c2-4391-88fd-181c3f64178d__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__08040b26-01c2-4391-88fd-181c3f64178d"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ubuntu_vanilla_spark" data-display-key="name" data-object-id="16aa9b80-b0c2-40ec-93ef-d80669c5d555" id="image_registry__row__16aa9b80-b0c2-40ec-93ef-d80669c5d555">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="76f8cb8a-178b-4e55-bc29-044485906315" name="object_ids" value="16aa9b80-b0c2-40ec-93ef-d80669c5d555" type="checkbox"><label for="76f8cb8a-178b-4e55-bc29-044485906315"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/16aa9b80-b0c2-40ec-93ef-d80669c5d555/">ubuntu_vanilla_spark</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">vanilla</span></li><li><span class="label label-info" id="image-tag">0.1</span></li><li><span class="label label-info" id="image-tag">1.6.0</span></li><li><span class="label label-info" id="image-tag">ghjjgh</span></li><li><span class="label label-info" id="image-tag">5.1.0.mrv2</span></li><li><span class="label label-info" id="image-tag">2.7.1</span></li><li><span class="label label-info" id="image-tag">fake</span></li><li><span class="label label-info" id="image-tag">mapr</span></li><li><span class="label label-info" id="image-tag">spark</span></li><li><span class="label label-info" id="image-tag">2.3</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_16aa9b80-b0c2-40ec-93ef-d80669c5d555__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/16aa9b80-b0c2-40ec-93ef-d80669c5d555/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_16aa9b80-b0c2-40ec-93ef-d80669c5d555__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__16aa9b80-b0c2-40ec-93ef-d80669c5d555"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="cdh-5.7-centos7" data-display-key="name" data-object-id="080f6018-d165-4140-a1e6-b34c6140df35" id="image_registry__row__080f6018-d165-4140-a1e6-b34c6140df35">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="71916e59-5916-41de-b4ce-45f1e0983017" name="object_ids" value="080f6018-d165-4140-a1e6-b34c6140df35" type="checkbox"><label for="71916e59-5916-41de-b4ce-45f1e0983017"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/080f6018-d165-4140-a1e6-b34c6140df35/">cdh-5.7-centos7</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">5.7.0</span></li><li><span class="label label-info" id="image-tag">cdh</span></li></ul></td><td class="sortable normal_column">
+            centos
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_080f6018-d165-4140-a1e6-b34c6140df35__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/080f6018-d165-4140-a1e6-b34c6140df35/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_080f6018-d165-4140-a1e6-b34c6140df35__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__080f6018-d165-4140-a1e6-b34c6140df35"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="ubuntu_ambari" data-display-key="name" data-object-id="6a4fe9f0-cbb4-48a4-afe8-9262016afba3" id="image_registry__row__6a4fe9f0-cbb4-48a4-afe8-9262016afba3">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="d825e9bb-251c-4cc7-a02d-a4afbc161650" name="object_ids" value="6a4fe9f0-cbb4-48a4-afe8-9262016afba3" type="checkbox"><label for="d825e9bb-251c-4cc7-a02d-a4afbc161650"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/6a4fe9f0-cbb4-48a4-afe8-9262016afba3/">ubuntu_ambari</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">2.4</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_6a4fe9f0-cbb4-48a4-afe8-9262016afba3__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/6a4fe9f0-cbb4-48a4-afe8-9262016afba3/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_6a4fe9f0-cbb4-48a4-afe8-9262016afba3__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__6a4fe9f0-cbb4-48a4-afe8-9262016afba3"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="sahara-newton-ambari-2.4-centos-6.6" data-display-key="name" data-object-id="504fc94e-db14-4459-89b5-b0d32cd4d4bf" id="image_registry__row__504fc94e-db14-4459-89b5-b0d32cd4d4bf">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="6c78349f-0e98-47c4-9b12-0e282be410fb" name="object_ids" value="504fc94e-db14-4459-89b5-b0d32cd4d4bf" type="checkbox"><label for="6c78349f-0e98-47c4-9b12-0e282be410fb"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/504fc94e-db14-4459-89b5-b0d32cd4d4bf/">sahara-newton-ambari-2.4-centos-6.6</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">ambari</span></li><li><span class="label label-info" id="image-tag">5.1.0.mrv2</span></li><li><span class="label label-info" id="image-tag">mapr</span></li><li><span class="label label-info" id="image-tag">2.4</span></li></ul></td><td class="sortable normal_column">
+            cloud-user
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_504fc94e-db14-4459-89b5-b0d32cd4d4bf__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/504fc94e-db14-4459-89b5-b0d32cd4d4bf/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_504fc94e-db14-4459-89b5-b0d32cd4d4bf__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__504fc94e-db14-4459-89b5-b0d32cd4d4bf"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+      <tr class="" data-display="vanilla-ubuntu14" data-display-key="name" data-object-id="fbc8f634-f786-43b2-b249-486b00d33f0d" id="image_registry__row__fbc8f634-f786-43b2-b249-486b00d33f0d">
+    <td class="multi_select_column"><div class="themable-checkbox"><input class="table-row-multi-select" id="bfa09a2c-5ecd-4bdb-b280-3a553f18018e" name="object_ids" value="fbc8f634-f786-43b2-b249-486b00d33f0d" type="checkbox"><label for="bfa09a2c-5ecd-4bdb-b280-3a553f18018e"></label></div></td><td class="sortable anchor normal_column"><a href="http://172.18.78.25:8080/project/images/fbc8f634-f786-43b2-b249-486b00d33f0d/">vanilla-ubuntu14</a></td><td class="sortable normal_column"><ul class="list-unstyled"><li><span class="label label-info" id="image-tag">vanilla</span></li><li><span class="label label-info" id="image-tag">2.7.1</span></li></ul></td><td class="sortable normal_column">
+            ubuntu
+        </td><td class="actions_column"><div class="btn-group"><a id="image_registry__row_fbc8f634-f786-43b2-b249-486b00d33f0d__action_edit_tags" class="btn data-table-action btn-default btn-sm ajax-modal" href="http://172.18.78.25:8080/project/data_processing/clusters/edit_tags/fbc8f634-f786-43b2-b249-486b00d33f0d/"> Edit Tags</a><a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right row_actions"><li><button data-batch-action="true" id="image_registry__row_fbc8f634-f786-43b2-b249-486b00d33f0d__action_unregister" class="data-table-action btn-danger btn" name="action" help_text="This action cannot be undone." type="submit" value="image_registry__unregister__fbc8f634-f786-43b2-b249-486b00d33f0d"> Unregister Image</button></li></ul></div></td>
+</tr>
+
+    
+    </tbody>
+  
+  
+    
+    <tfoot>
+      
+      <tr>
+        <td data-column="0" colspan="5">
+          <span class="table_count"></span>
+          
+          
+          
+        </td>
+      </tr>
+    </tfoot>
+    
+  
+  </table>
+
+  
+  </form>
+</div>
+
+
+
+    </div>
+    
+  </div>
+
+
+
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  addHorizonLoadEvent(function () {
+      horizon.modals.addModalInitFunction(function (modal) {
+        if ($("#id_tags_list").val()) {
+            var tags = JSON.parse($("#id_tags_list").val());
+            $.each(tags, function (i, tag) {
+                var tagspan = '<span class="label label-info" id="image-tag">' +
+                        tag +
+                        '<i class="fa fa-close" onclick="remove_tag(this);"></i></span>';
+                $("#image_tags_list").append(tagspan);
+            });
+        }
+     });
+  });
+</script>
+
+<script type="text/javascript">
+    addHorizonLoadEvent(function () {
+        horizon.modals.addModalInitFunction(function (modal) {
+            // ensure that we only do this for the cluster template form
+            if (($(modal).find("#create_cluster_template__selectpluginaction")).length > 0) {
+                hide_navbar_pills(modal);
+
+                var add_ng_btn_label = 'Add Node Group';
+                $(".hidden_nodegroups_field").after("<input type='button' id='add_nodegroup' value='" + add_ng_btn_label + "'/><br/>");
+                $("#add_nodegroup").click(function() {
+                    $(".hidden_nodegroups_field").val("create_nodegroup");
+                    $(".hidden_configure_field").val("create_nodegroup");
+                    var form = $(".hidden_nodegroups_field").closest("form");
+                    form.submit();
+                });
+
+
+                $(".hidden_nodegroups_field").val("");
+                $(".hidden_configure_field").val("");
+
+                if ($(modal).find(".hidden_create_field").length > 0) {
+                    var form = $(".hidden_create_field").closest("form");
+                    var successful = false;
+                    form.submit(function (e) {
+                            var oldHref = $(".configure-clustertemplate-btn")[0].href;
+                            var plugin = $("#id_plugin_name option:selected").val();
+                            var version = $("#id_" + plugin + "_version option:selected").val();
+                            form.find(".close").click();
+                            $(".configure-clustertemplate-btn")[0].href = oldHref +
+                                    "?plugin_name=" + encodeURIComponent(plugin) +
+                                    "&hadoop_version=" + encodeURIComponent(version);
+                            $(".configure-clustertemplate-btn").click();
+                            $(".configure-clustertemplate-btn")[0].href = oldHref;
+                            return false;
+                    });
+                }
+            }
+        });
+
+    });
+</script>
+
+ <script type="text/javascript">
+        addHorizonLoadEvent(function () {
+            function get_service_tab(service) {
+                return $("a").filter(function (idx, e) {
+                    return $(e).attr("data-target") && $(e).attr("data-target").indexOf('_'+service.toLowerCase()+'-') != -1
+                }).closest("li");
+            }
+
+            // replace form submit with ajax POST and trigger next workflow
+            horizon.modals.addModalInitFunction(function (modal) {
+                // ensure that we only do this for the nodegroup template form
+                if (($(modal).find("#create_nodegroup_template__selectpluginaction")).length > 0) {
+                    hide_navbar_pills(modal);
+
+                    if ($(modal).find(".hidden_create_field").length > 0) {
+                        var form = $(".hidden_create_field").closest("form");
+                        var successful = false;
+                        form.submit(function (e) {
+                            var oldHref = $(".configure-nodegrouptemplate-btn")[0].href;
+                            var plugin = $("#id_plugin_name option:selected").val();
+                            var version = $("#id_" + plugin + "_version option:selected").val();
+                            form.find(".close").click();
+                            $(".configure-nodegrouptemplate-btn")[0].href = oldHref +
+                                    "?plugin_name=" + encodeURIComponent(plugin) +
+                                    "&hadoop_version=" + encodeURIComponent(version);
+                            $(".configure-nodegrouptemplate-btn").click();
+                            $(".configure-nodegrouptemplate-btn")[0].href = oldHref;
+                            return false;
+                        });
+                    }
+                }
+
+                //handle node processes change
+                $("input").filter(function (idx, e) {
+                    return $(e).attr("name") && $(e).attr("name").indexOf("processes") != -1
+                })
+                        .change(function () {
+                            var process_service = $(this).val();
+                            var service = $(this).val().split(":")[0];
+                            var enabled = false;
+                            $(this).closest("ul").find("input").each(function (idx, el) {
+                                if ($(el).val().split(":")[0] != service) {
+                                    return;
+                                }
+                                enabled |= $(el).is(':checked');
+                            });
+                            if (enabled) {
+                                get_service_tab(service).show();
+                            } else {
+                                get_service_tab(service).hide();
+                            }
+                        }).change();
+                //general tab should be active
+                get_service_tab("generalconfigaction").find("a").click();
+            });
+        });
+    </script>
+
+<script type="text/javascript">
+    addHorizonLoadEvent(function () {
+
+        horizon.modals.addModalInitFunction(function (modal) {
+            // ensure that we only do this for the create cluster form
+            if (($(modal).find("#create_cluster__selectpluginaction")).length > 0) {
+                hide_navbar_pills(modal);
+
+                $(".hidden_nodegroups_field").val("");
+                $(".hidden_configure_field").val("");
+
+                lower_limit = 0;
+                $(".count-field").change();
+
+                if ($(modal).find(".hidden_create_field").length > 0) {
+                    var form = $(".hidden_create_field").closest("form");
+                    var successful = false;
+                    form.submit(function (e) {
+                        var oldHref = $(".configure-cluster-btn")[0].href;
+                        var plugin = $("#id_plugin_name option:selected").val();
+                        var version = $("#id_" + plugin + "_version option:selected").val();
+                        form.find(".close").click();
+                        $(".configure-cluster-btn")[0].href = oldHref +
+                                "?plugin_name=" + encodeURIComponent(plugin) +
+                                "&hadoop_version=" + encodeURIComponent(version);
+                        $(".configure-cluster-btn").click();
+                        $(".configure-cluster-btn")[0].href = oldHref;
+                        return false;
+                    });
+                }
+            }
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    addHorizonLoadEvent(function () {
+        horizon.modals.addModalInitFunction(function (modal) {
+            if (($(modal).find("#configure_cluster__generalconfigaction")).length > 0) {
+                hide_navbar_pills(modal);
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function hide_navbar_pills(modal) {
+        var $navbar = $(modal).find(".nav-pills");
+        if ($navbar.find("li").size() == 1) {
+            $navbar.hide();
+        }
+    }
+</script>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <div id="footer">
+      
+        
+      
+    </div>
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="Clusters%20-%20OpenStack%20Dashboard-2_files/a"></script>
+
+
+
+<script type="text/javascript" src="Clusters%20-%20OpenStack%20Dashboard-2_files/7efd6fbda343.js"></script>
+
+<script type="text/javascript" src="Clusters%20-%20OpenStack%20Dashboard-2_files/e0dccbc3af10.js"></script>
+
+
+<script type="text/html" id="modal_template"><div class="modal" data-backdrop="{{modal_backdrop}}"><div class="modal-dialog"><div class="modal-content"><div class='modal-header'><a class='close' data-dismiss='modal' href="#"><span class="fa fa-times"></span></a><h3 class="modal-title">{{title}}</h3></div><div class='modal-body'>
+        {{{body}}}
+      </div><div class='modal-footer'><a href='#' class='btn btn-default cancel' data-dismiss='modal'>{{cancel}}</a><a href='#' class='btn btn-primary'>{{confirm}}</a></div></div></div></div></script>
+
+<script type="text/html" id="empty_row_template"><tr class="odd empty"><td colspan="{{colspan}}">{{no_items_label}}</td></tr></script>
+
+<script type="text/html" id="alert_message_template"><div class="alert alert-dismissable fade in alert-{{type}}"><a class="close" data-dismiss="alert" href="#"><span class="fa fa-times"></span></a><p><strong>{{type_display}}</strong>
+    {{#safe}}
+      {{{message}}}
+    {{/safe}}
+    {{^safe}}
+      {{message}}
+    {{/safe}}
+  </p></div></script>
+
+<script type="text/html" id="spinner-modal"><div class="modal loading"><div class="modal-dialog modal-xs"><div class="modal-content"><div class="modal-body"><p class="text-center">{{text}}&hellip;</p></div></div></div></div></script>
+
+<script type="text/html" id="membership_template"><ul class="nav nav-pills btn-group btn-group-sm"><li class="member" data-{{step_slug}}-id="{{data_id}}"><span class="display_name">{{display_name}}</span></li><li class="active"><a class="btn btn-primary" href="#add_remove">{{text}}</a></li><li class="dropdown role_options"><a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#"><span class="roles_display">{{roles_label}}</span><span class="fa fa-caret-down"></span></a><ul class="dropdown-menu dropdown-menu-right role_dropdown">
+      {{#roles}}
+      <li data-role-id="{{role_id}}"><a target="_blank"><span class="fa fa-check"></span>
+          {{role_name}}
+        </a></li>
+      {{/roles}}
+    </ul></li></ul></script>
+
+<script type="text/html" id="confirm_modal"><div class="confirm-wrapper"><span class="confirm-list">You have selected: {{selection}}. </span><span class="confirm-text">Please confirm your selection. </span><span class="confirm-help">{{help}}</span></div></script>
+
+<script type="text/html" id="progress-modal"><div class="modal loading"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-body"><div class="modal-progress-loader"><div class="progress-text"><div class="progress"><div class="progress-bar " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><span class="progress-bar-text">0%</span></div><div class="progress-label text-center h4">{{text}}</div></div></div></div></div></div></script>
+
+
+
+
+
+
+<script>
+  // Call init on DOM ready.
+  $(document).ready(horizon.init);
+</script>
+
+    
+    
+  
+
+<div id="modal_wrapper">
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div style="display: block;" class="workflow modal in ng-scope" data-backdrop="static">
+  <form class="ng-pristine ng-valid" action="/project/data_processing/clusters/configure-nodegroup-template" method="POST"><input name="csrfmiddlewaretoken" value="hmi1wZ8X39b9qWscEKdaaxvAn2QqdfIe" type="hidden">
+    
+    <div class="modal-dialog">
+      <div class="modal-content ui-draggable">
+        <div class="modal-header ui-draggable-handle">
+        
+          
+            <a href="#" class="close" data-dismiss="modal">
+              <span class="fa fa-times"></span>
+            </a>
+          
+          <h3 class="modal-title">Create Node Group Template</h3>
+        
+        </div>
+        <div class="modal-body">
+        
+        <ul class="nav nav-pills" role="tablist">
+            
+            <li class="required active">
+              <a aria-expanded="true" href="#configure_nodegroup_template__generalconfigaction" data-toggle="tab" data-target="#configure_nodegroup_template__generalconfigaction">
+                Configure Node Group Template
+                <span class="hz-icon-required fa fa-asterisk"></span>
+
+              </a>
+            </li>
+            
+            <li class="required">
+              <a aria-expanded="false" href="#configure_nodegroup_template__selectnodeprocessesaction" data-toggle="tab" data-target="#configure_nodegroup_template__selectnodeprocessesaction">
+                Node Processes
+                <span class="hz-icon-required fa fa-asterisk"></span>
+
+              </a>
+            </li>
+            
+            <li class="">
+              <a href="#configure_nodegroup_template__securityconfigaction" data-toggle="tab" data-target="#configure_nodegroup_template__securityconfigaction">
+                Security
+                
+              </a>
+            </li>
+            
+          </ul>
+          <div class="tab-content">
+            
+              <fieldset id="configure_nodegroup_template__generalconfigaction" class="js-tab-pane tab-pane active">
+                <noscript><h3>Configure Node Group Template</h3></noscript>
+<div class="row">
+  <div class="col-sm-6">
+    
+  <input class="hidden_configure_field" id="id_hidden_configure_field" name="hidden_configure_field" type="hidden">
+
+  <input id="id_plugin_name" name="plugin_name" value="fake" type="hidden">
+
+  <input id="id_hadoop_version" name="hadoop_version" value="0.1" type="hidden">
+
+
+
+
+
+  
+
+<div class="form-group required">
+  
+    
+      <label class="control-label  required" for="id_nodegroup_name">
+          <span class="field-label">Template Name</span></label>
+      <span class="hz-icon-required fa fa-asterisk"></span>
+
+
+
+    
+
+    <div class=" ">
+      
+      
+        <input class="form-control" id="id_nodegroup_name" name="nodegroup_name" type="text">
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    
+      <label class="control-label  " for="id_description">
+          <span class="field-label">Description</span></label>
+      
+
+
+    
+
+    <div class=" ">
+      
+      
+        <textarea class="form-control" cols="40" id="id_description" name="description" rows="4"></textarea>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group required">
+  
+    
+      <label class="control-label  required" for="id_flavor">
+          <span class="field-label">OpenStack Flavor</span></label>
+      <span class="hz-icon-required fa fa-asterisk"></span>
+
+
+
+    
+
+    <div class=" ">
+      
+      
+        <select class="form-control" id="id_flavor" name="flavor">
+<option selected="selected" value="adf9f8e2-75c1-404a-8b97-2e02c7b8488b">m1.micro</option>
+<option value="1">m1.tiny</option>
+<option value="2">m1.small</option>
+<option value="3">m1.medium</option>
+<option value="4">m1.large</option>
+<option value="5">m1.xlarge</option>
+</select>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    
+      <label class="control-label  " for="id_availability_zone">
+          <span class="field-label">Availability Zone</span></label>
+      
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Launch instances in this availability zone.">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+    
+
+    <div class=" ">
+      
+      
+        <select class="form-control availability_zone_field" id="id_availability_zone" name="availability_zone">
+<option value="" selected="selected">No availability zone specified</option>
+<option value="nova">nova</option>
+</select>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group required">
+  
+    
+      <label class="control-label  required" for="id_storage">
+          <span class="field-label">Storage location</span></label>
+      <span class="hz-icon-required fa fa-asterisk"></span>
+
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Choose a storage location">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+    
+
+    <div class=" ">
+      
+      
+        <select class="form-control switchable storage_field" data-slug="storage_loc" id="id_storage" name="storage">
+<option selected="selected" value="ephemeral_drive">Ephemeral Drive</option>
+<option value="cinder_volume">Cinder Volume</option>
+</select>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div style="display: none;" class="form-group ">
+  
+    
+      <label class="control-label  " for="id_volumes_per_node">
+          <span class="field-label">Volumes per node</span></label>
+      
+
+
+    
+
+    <div class=" ">
+      
+      
+        <input class="form-control volume_per_node_field switched" data-storage_loc-cinder_volume="Volumes per node" data-switch-on="storage_loc" id="id_volumes_per_node" name="volumes_per_node" value="1" type="text">
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div style="display: none;" class="form-group ">
+  
+    
+      <label class="control-label  " for="id_volumes_size">
+          <span class="field-label">Volumes size (GB)</span></label>
+      
+
+
+    
+
+    <div class=" ">
+      
+      
+        <input class="form-control volume_size_field switched" data-storage_loc-cinder_volume="Volumes size (GB)" data-switch-on="storage_loc" id="id_volumes_size" name="volumes_size" value="10" type="text">
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div style="display: none;" class="form-group ">
+  
+    
+      <label class="control-label  " for="id_volume_type">
+          <span class="field-label">Volumes type</span></label>
+      
+
+
+    
+
+    <div class=" ">
+      
+      
+        <select class="form-control volume_type_field switched" data-storage_loc-cinder_volume="Volumes type" data-switch-on="storage_loc" id="id_volume_type" name="volume_type">
+<option value="" selected="selected">No volume type</option>
+<option value="volumes_lvm">volumes_lvm</option>
+</select>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div style="display: none;" class="form-group ">
+  
+    <div class="">
+    <div class="themable-checkbox">
+  
+    <input class="volume_local_to_instance_field switched" data-storage_loc-cinder_volume="Volume local to instance" data-switch-on="storage_loc" id="id_volume_local_to_instance" name="volume_local_to_instance" type="checkbox">
+    <label for="id_volume_local_to_instance">
+     
+       <span class="control-label">Volume local to instance</span>
+       
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Instance and attached volumes will be created on the same physical host">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+     
+    </label>
+  
+</div>
+
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div style="display: none;" class="form-group ">
+  
+    
+      <label class="control-label  " for="id_volumes_availability_zone">
+          <span class="field-label">Volumes Availability Zone</span></label>
+      
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Create volumes in this availability zone.">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+    
+
+    <div class=" ">
+      
+      
+        <select class="volumes_availability_zone_field form-control switched" data-storage_loc-cinder_volume="Volumes Availability Zone" data-switch-on="storage_loc" id="id_volumes_availability_zone" name="volumes_availability_zone">
+<option value="" selected="selected">No availability zone specified</option>
+<option value="nova">nova</option>
+</select>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    
+      <label class="control-label  " for="id_image">
+          <span class="field-label">Base Image</span></label>
+      
+
+
+    
+
+    <div class=" ">
+      
+      
+        <div class="input-group">
+          <select class="form-control" data-add-item-url="/project/data_processing/clusters/register/" id="id_image" name="image">
+<option selected="selected" value="None">No image specified</option>
+<option value="16aa9b80-b0c2-40ec-93ef-d80669c5d555">ubuntu_vanilla_spark</option>
+</select>
+          <span class="input-group-btn">
+            <a href="http://172.18.78.25:8080/project/data_processing/clusters/register/" data-add-to-field="id_image" class="btn btn-default ajax-add ajax-modal">
+              <span class="fa fa-plus"></span>
+            </a>
+          </span>
+        </div>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    
+      <label class="control-label  " for="id_floating_ip_pool">
+          <span class="field-label">Floating IP Pool</span></label>
+      
+
+
+    
+
+    <div class=" ">
+      
+      
+        <select class="form-control" id="id_floating_ip_pool" name="floating_ip_pool">
+<option value="" selected="selected">Do not assign floating IPs</option>
+<option value="a53f5e32-da44-437a-ae4d-c75a6cb05841">admin_floating_net</option>
+</select>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    <div class="">
+    <div class="themable-checkbox">
+  
+    <input checked="checked" id="id_use_autoconfig" name="use_autoconfig" type="checkbox">
+    <label for="id_use_autoconfig">
+     
+       <span class="control-label">Auto-configure</span>
+       
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="If selected, instances of a node group will be automatically configured during cluster creation. Otherwise you should manually specify configuration values.">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+     
+    </label>
+  
+</div>
+
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    <div class="">
+    <div class="themable-checkbox">
+  
+    <input id="id_proxygateway" name="proxygateway" type="checkbox">
+    <label for="id_proxygateway">
+     
+       <span class="control-label">Proxy Gateway</span>
+       
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Sahara will use instances of this node group to access other cluster instances.">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+     
+    </label>
+  
+</div>
+
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    <div class="">
+    <div class="themable-checkbox">
+  
+    <input id="id_is_public" name="is_public" type="checkbox">
+    <label for="id_is_public">
+     
+       <span class="control-label">Public</span>
+       
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="If selected, node group template will be shared across the tenants">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+     
+    </label>
+  
+</div>
+
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    <div class="">
+    <div class="themable-checkbox">
+  
+    <input id="id_is_protected" name="is_protected" type="checkbox">
+    <label for="id_is_protected">
+     
+       <span class="control-label">Protected</span>
+       
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="If selected, node group template will be protected from modifications until this will be unselected">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+     
+    </label>
+  
+</div>
+
+    </div>
+  
+  
+</div>
+
+
+
+  </div>
+  <div class="col-sm-6">
+    <p></p>
+<div class="well">
+<p>
+    This Node Group Template will be created for:
+    <br>
+    <b>Plugin</b>: fake
+    <br>
+    <b>Version</b>: 0.1
+    <br>
+        
+</p>
+<p>
+    The Node Group Template object specifies the processes
+        that will be launched on each instance. Check one or more processes.
+        When processes are selected, you may set <b>node</b> scoped
+        configurations on corresponding tabs.
+</p>
+<p>
+    You must choose a flavor to determine the size (VCPUs, memory and storage) of all launched VMs.
+</p>
+<p>
+    Data Processing provides different storage location options. You may
+ choose Ephemeral Drive or a Cinder Volume to be attached to instances.
+</p>
+</div>
+
+  </div>
+</div>
+
+              </fieldset>
+              
+                <noscript><hr /></noscript>
+              
+            
+              <fieldset id="configure_nodegroup_template__selectnodeprocessesaction" class="js-tab-pane tab-pane">
+                <noscript><h3>Node Processes</h3></noscript>
+<div class="row">
+  <div class="col-sm-6">
+    
+
+
+
+
+  
+
+<div class="form-group required">
+  
+    
+      <label class="control-label  required" for="id_processes">
+          <span class="field-label">Select Node Group Processes</span></label>
+      <span class="hz-icon-required fa fa-asterisk"></span>
+
+
+
+    
+
+    <div class=" multiple-checkbox">
+      
+      
+        <label>HDFS processes: </label>
+<ul>
+<li><label for="id_processes_0"><input id="id_processes_0" name="processes" value="HDFS:namenode" type="checkbox"> namenode</label></li>
+<li><label for="id_processes_1"><input id="id_processes_1" name="processes" value="HDFS:datanode" type="checkbox"> datanode</label></li>
+</ul>
+<label>MapReduce processes: </label>
+<ul>
+<li><label for="id_processes_2"><input id="id_processes_2" name="processes" value="MapReduce:tasktracker" type="checkbox"> tasktracker</label></li>
+<li><label for="id_processes_3"><input id="id_processes_3" name="processes" value="MapReduce:jobtracker" type="checkbox"> jobtracker</label></li>
+</ul>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+
+  </div>
+  <div class="col-sm-6">
+    <p></p><p>Select node processes for the node group</p>
+  </div>
+</div>
+
+              </fieldset>
+              
+                <noscript><hr /></noscript>
+              
+            
+              <fieldset id="configure_nodegroup_template__securityconfigaction" class="js-tab-pane tab-pane">
+                <noscript><h3>Security</h3></noscript>
+<div class="row">
+  <div class="col-sm-6">
+    
+
+
+
+
+  
+
+<div class="form-group ">
+  
+    <div class="">
+    <div class="themable-checkbox">
+  
+    <input checked="checked" id="id_security_autogroup" name="security_autogroup" type="checkbox">
+    <label for="id_security_autogroup">
+     
+       <span class="control-label">Auto Security Group</span>
+       
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Create security group for this Node Group.">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+     
+    </label>
+  
+</div>
+
+    </div>
+  
+  
+</div>
+
+
+  
+
+<div class="form-group ">
+  
+    
+      <label class="control-label  " for="id_security_groups">
+          <span class="field-label">Security Groups</span></label>
+      
+
+  <span class="help-icon" data-toggle="tooltip" data-placement="top" title="Launch instances in these security groups.">
+    <span class="fa fa-question-circle"></span>
+  </span>
+
+
+    
+
+    <div class=" multiple-checkbox">
+      
+      
+        <ul id="id_security_groups"><li><label for="id_security_groups_0"><input id="id_security_groups_0" name="security_groups" value="0b86eda0-3936-4ea8-b010-58287fc0ff7e" type="checkbox"> vgt5f87e66c-vgt-worker-cead7c30-j6oohup4w5ij</label></li>
+<li><label for="id_security_groups_1"><input id="id_security_groups_1" name="security_groups" value="10594a09-cca8-4390-bcec-71be11f4c959" type="checkbox"> mi-amb-testad6f7b92-mi-amb-test-amb-master-48c15594-ais5sky3d7kn</label></li>
+<li><label for="id_security_groups_2"><input id="id_security_groups_2" name="security_groups" value="10d6d7e4-3185-4d99-8e22-d8306d5b8e94" type="checkbox"> mi-amb-ub906b1680-mi-amb-ub-amb-master-3568e8f1-g7ajgi3b4rhy</label></li>
+<li><label for="id_security_groups_3"><input id="id_security_groups_3" name="security_groups" value="179a2c65-a0da-46a4-9404-a6fa793dc3fa" type="checkbox"> vgd379f422-vg-worker-5f2c5877-22yj6kfnykcp</label></li>
+<li><label for="id_security_groups_4"><input id="id_security_groups_4" name="security_groups" value="1b9a5d7d-21e7-4d5a-a787-eec6e6644e36" type="checkbox"> mi-amb-testad6f7b92-mi-amb-test-amb-worker-cbea5b54-2iymcjh3ttcu</label></li>
+<li><label for="id_security_groups_5"><input id="id_security_groups_5" name="security_groups" value="22a0f5fc-68a0-4d65-b987-dedbdf78bccd" type="checkbox"> mi-amb-ub906b1680-mi-amb-ub-amb-worker-87263a9c-jkyvigmtzfxy</label></li>
+<li><label for="id_security_groups_6"><input id="id_security_groups_6" name="security_groups" value="2757ebd7-c189-4d62-b381-256ac0be7bd5" type="checkbox"> mi-ambc2a5e227-mi-amb-amb-worker-ff3a116d-6vz7yttmpvrp</label></li>
+<li><label for="id_security_groups_7"><input id="id_security_groups_7" name="security_groups" value="30261789-4522-4f21-959a-5951353ca95f" type="checkbox"> vgt5f87e66c-vgt-edp-3f669f8b-rqzfdj6j4jsi</label></li>
+<li><label for="id_security_groups_8"><input id="id_security_groups_8" name="security_groups" value="3688c4f4-ce00-49cd-8e3d-06c3913b714d" type="checkbox"> vgt5f87e66c-vgt-master-47a80c48-7bcbjchww3s3</label></li>
+<li><label for="id_security_groups_9"><input id="id_security_groups_9" name="security_groups" value="37a95f9f-a074-466a-a8c6-27ca11ed951c" type="checkbox"> mi-amb-ubuntu0f8a279b-mi-amb-ubuntu-amb-worker-491deb47-mqcchjtansvi</label></li>
+<li><label for="id_security_groups_10"><input id="id_security_groups_10" name="security_groups" value="3bec2505-3ba4-4eef-a7f5-93e584aa09fb" type="checkbox"> vgd379f422-vg-master-3efc00d6-eip52briwkzx</label></li>
+<li><label for="id_security_groups_11"><input id="id_security_groups_11" name="security_groups" value="5ecf741e-ada3-42a2-9a68-b35373c024ea" type="checkbox"> vgd379f422-vg-edp-410a2591-er4pfbigqb7p</label></li>
+<li><label for="id_security_groups_12"><input id="id_security_groups_12" name="security_groups" value="96936c7d-a193-4d57-b055-9df79504e813" type="checkbox"> mi-ambc2a5e227-mi-amb-amb-master-3c859fce-7ac5n2hduidq</label></li>
+<li><label for="id_security_groups_13"><input id="id_security_groups_13" name="security_groups" value="b5463156-6b15-48d9-a92b-e5a5d99d0386" type="checkbox"> mi-amb-ub906b1680-mi-amb-ub-amb-manager-562f8b30-5allb25ngcww</label></li>
+<li><label for="id_security_groups_14"><input id="id_security_groups_14" name="security_groups" value="b9de5296-ff2f-44af-af1d-e7fb76954d2f" type="checkbox"> mi-ambc2a5e227-mi-amb-amb-manager-6ca6cd8f-seyl26wava2q</label></li>
+<li><label for="id_security_groups_15"><input id="id_security_groups_15" name="security_groups" value="c4003e22-602b-4c51-8a83-4fbdae799dbd" type="checkbox"> mi-amb-testad6f7b92-mi-amb-test-amb-manager-6ef7ed8b-tqqn5jpolh75</label></li>
+<li><label for="id_security_groups_16"><input id="id_security_groups_16" name="security_groups" value="db721087-0bc2-4455-9340-f198cbb1ab8e" type="checkbox"> ml-vanillafd47fcc5-ml-vanilla-worker-vanilla-3-f06bd0b7-g4ub2i54pbkl</label></li>
+<li><label for="id_security_groups_17"><input id="id_security_groups_17" name="security_groups" value="dd8ae3ff-b909-4ae2-9499-6d3c1376737b" type="checkbox"> default</label></li>
+<li><label for="id_security_groups_18"><input id="id_security_groups_18" name="security_groups" value="de19bb73-1491-46d3-9a24-b096dfcc2e1a" type="checkbox"> ml-vanillafd47fcc5-ml-vanilla-master-vanilla-4-dd03705b-k7kiui5goy2l</label></li>
+<li><label for="id_security_groups_19"><input id="id_security_groups_19" name="security_groups" value="fa3d2820-565f-4d89-8800-a5ac86df084f" type="checkbox"> mi-amb-ubuntu0f8a279b-mi-amb-ubuntu-amb-master-7f9c3ebb-eilzbgv7vzxw</label></li></ul>
+      
+      
+    </div>
+  
+  
+</div>
+
+
+
+  </div>
+  <div class="col-sm-6">
+    <p></p><p>Control access to instances of the node group.</p>
+  </div>
+</div>
+
+              </fieldset>
+              
+            
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+        
+          
+            <a class="btn btn-default cancel">Cancel</a>
+            <input class="btn btn-primary" value="Create" type="submit">
+          
+        
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+  
+
+</div><div class="modal-backdrop in"></div></body></html>
